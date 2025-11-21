@@ -1,0 +1,406 @@
+
+/* https://stackoverflow.com/questions/19255296/is-there-a-way-to-use-svg-as-content-in-a-pseudo-element-before-or-after */
+
+@font-face {
+    font-family: "NCMNumber";
+        src: url("/support/vendor/mathjax/fonts/mathjax-newcm-font/chtml/woff2/mjx-ncm-n.woff2") format("woff2");
+}
+
+body {
+    overflow: hidden;
+    margin: 0;
+    color: var(--foreground-color);
+    font-family: 'Lato', sans-serif;
+    font-size: var(--root-font-size);
+    background-color: var(--background-color);
+}
+
+canvas {
+    box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+}
+
+:root {
+    --icon-size: 3rem;
+    --shade-size: 2px;
+}
+/* NCMNumber,  */
+.math {
+    font-family: NCMNumber;
+    font-weight: 100;
+    font-size: 1.165em;
+}
+
+.math-background:has(>.math-visible) {
+    box-shadow: 0 0 10px 10px color-mix(in srgb, var(--background-color) 80%, #0000 20%);
+    background-color: color-mix(in srgb, var(--background-color) 80%, #0000 20%);
+}
+
+#interactive-math {
+    transition: opacity 1s, max-width 1s, max-height 1s;
+    cursor: w-resize;
+    overflow: hidden;
+    user-select: none;
+    line-height: 1em;
+    
+    position: relative;
+    z-index: 1;
+}
+
+.show-interactive-math {
+    opacity: 1;
+    max-width: 100dvw;
+    max-height: 100dvh;
+}
+
+.hide-interactive-math {
+    opacity: 0;
+    pointer-events: none;
+    max-width: 0;
+    max-height: 0;
+}
+
+#what-about-vr>ul {
+    margin: 0.75em;
+}
+
+#what-about-vr * {
+    pointer-events: none;
+    transition: opacity 0.5s;
+}
+
+.hide {
+    opacity: 0;
+}
+
+.funkey {
+    color: red !important;
+}
+
+nav {
+    margin: 1rem;
+    padding: calc(var(--shade-size) * 2);
+    display: flex;
+    box-sizing: content-box;
+    width: fit-content;
+    justify-items: center;
+    overflow: hidden;
+    gap: 0.5rem;
+    max-width: var(--icon-size);
+    transition: max-width 0.1s;
+    & > * {
+        display: flex;
+        min-width: var(--icon-size);
+        width: var(--icon-size);
+        height: var(--icon-size);
+        justify-content: center;
+        align-items: center;
+    }
+    &:has(#edit_mode:checked) {
+        max-width: calc((var(--icon-size) + 0.5rem) * 3);
+    }
+}
+
+nav > label:has(input[type="radio"], input[type="checkbox"]) {
+    & > input {
+        /* this is not accessible */
+        display: none;
+    }
+    & > span {
+        font-size: calc(var(--icon-size) * 0.75);
+        transition: all 0.1s;
+    }
+    &:has(:checked) {
+        color: var(--foreground-color);
+        border: 2px solid var(--foreground-color);
+        box-shadow: var(--shade-size) var(--shade-size) 0 0 var(--foreground-color), inset 0 0 0 0 var(--foreground-color);
+        transform: translate(calc(-1 * var(--shade-size)), calc(-1 * var(--shade-size)));
+    }
+    &:has(:active) {
+        transform: translate(0, 0);
+        & > span {
+            transform: translate(var(--shade-size), var(--shade-size));
+        }
+        border: 2px solid var(--foreground-color);
+        box-shadow: 0 0 0 0 var(--foreground-color), inset var(--shade-size) var(--shade-size) 0 0 var(--foreground-color);
+    }
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    transition: all 0.1s;
+    box-sizing: border-box;
+    color: gray;
+    border: 2px solid gray;
+    background-color: var(--background-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+body:has(#edit_mode:checked) .lil-gui.lil-gui {
+    transform: translate(0, 0);
+}
+
+.lil-gui.lil-gui {
+    transform: translate(0, calc(-100% - 1rem - 4px));
+    transition: transform 0.2s;
+    --background-color: inherit;
+    --text-color: var(--foreground-color);
+    --title-background-color: transparent;
+    --title-text-color: var(--header-color);
+    --number-color: var(--header-color);
+    --string-color: var(--header-color);
+    --widget-color: var(--shade1);
+    --hover-color: var(--shade2);
+    --focus-color: var(--shade2);
+    --width: 30dvw;
+    --font-size: 1rem;
+    --input-font-size: 1rem;
+    --widget-height: 1.5rem;
+    --padding: 0.5rem;
+    --spacing: 0.5rem;
+    border: 2px solid var(--foreground-color);
+    box-shadow: 2px 2px 0 0 var(--foreground-color);
+    border-radius: 0.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.lil-gui .controller .widget {
+    justify-content: flex-end;
+}
+
+.panel-right {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    width: 42%;
+    height: 80%;
+}
+
+#panel-reflection {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#panel-frustum {
+    width: 44%
+}
+
+.blue {
+    color: #5b8efd;
+}
+.purple {
+    color: #725def;
+}
+.pink {
+    color: #dd217d;
+}
+.orange {
+    color: #ff5f00;
+}
+.yellow {
+    color: #ffb00d;
+}
+.gray {
+    color: var(--shade2);
+}
+
+
+/* NOTE: Usually all these styles should be extracted from the top window and sent to the iframe. I'm only keeping these here as a backup. */
+:root {
+    --shade7: #1d1f21;
+    --shade6: #282a2e;
+    --shade5: #4d4d4c;
+    --shade4: #969896;
+    --shade3: #8e908c;
+    --shade2: #d6d6d6;
+    --shade1: #eeeeee;
+    --shade0: #ffffff;
+    --base0F-fg: #825449;
+    --base0F-ffg: #513733;
+    --base0F-bg: #ceb9b5;
+    --base0F-bbg: #f0ebea;
+    --base0F: #a3685a;
+    --base0E-fg: #6e4887;
+    --base0E-ffg: #453155;
+    --base0E-bg: #c4b5d1;
+    --base0E-bbg: #edeaf1;
+    --base0E: #8959a8;
+    --base0D-fg: #257eb3;
+    --base0D-ffg: #204f6f;
+    --base0D-bg: #acccec;
+    --base0D-bbg: #e8f0f9;
+    --base0D: #2a9ddf;
+    --base0C-fg: #347b80;
+    --base0C-ffg: #264d51;
+    --base0C-bg: #afcacd;
+    --base0C-bbg: #e8eff0;
+    --base0C: #3e999f;
+    --base0B-fg: #6a931c;
+    --base0B-ffg: #435c20;
+    --base0B-bg: #c2d8ab;
+    --base0B-bbg: #edf3e7;
+    --base0B: #84b819;
+    --base0A-fg: #bb9212;
+    --base0A-ffg: #745b1d;
+    --base0A-bg: #f3d8aa;
+    --base0A-bbg: #fbf3e7;
+    --base0A: #eab700;
+    --base09-fg: #c46c20;
+    --base09-ffg: #794521;
+    --base09-bg: #f9c3ab;
+    --base09-bbg: #fdede7;
+    --base09: #f5871f;
+    --base08-fg: #a02526;
+    --base08-ffg: #632123;
+    --base08-bg: #e0acac;
+    --base08-bbg: #f5e8e8;
+    --base08: #c82829;
+    --base07: #1d1f21;
+    --base06: #282a2e;
+    --base05: #4d4d4c;
+    --base04: #969896;
+    --base03: #8e908c;
+    --base02: #d6d6d6;
+    --base01: #eeeeee;
+    --base00: #ffffff;
+    --accent7-fg: #825449;
+    --accent7-ffg: #513733;
+    --accent7-bg: #ceb9b5;
+    --accent7-bbg: #f0ebea;
+    --accent7: #a3685a;
+    --accent6-fg: #6e4887;
+    --accent6-ffg: #453155;
+    --accent6-bg: #c4b5d1;
+    --accent6-bbg: #edeaf1;
+    --accent6: #8959a8;
+    --accent5-fg: #257eb3;
+    --accent5-ffg: #204f6f;
+    --accent5-bg: #acccec;
+    --accent5-bbg: #e8f0f9;
+    --accent5: #2a9ddf;
+    --accent4-fg: #347b80;
+    --accent4-ffg: #264d51;
+    --accent4-bg: #afcacd;
+    --accent4-bbg: #e8eff0;
+    --accent4: #3e999f;
+    --accent3-fg: #6a931c;
+    --accent3-ffg: #435c20;
+    --accent3-bg: #c2d8ab;
+    --accent3-bbg: #edf3e7;
+    --accent3: #84b819;
+    --accent2-fg: #bb9212;
+    --accent2-ffg: #745b1d;
+    --accent2-bg: #f3d8aa;
+    --accent2-bbg: #fbf3e7;
+    --accent2: #eab700;
+    --accent1-fg: #c46c20;
+    --accent1-ffg: #794521;
+    --accent1-bg: #f9c3ab;
+    --accent1-bbg: #fdede7;
+    --accent1: #f5871f;
+    --accent0-fg: #a02526;
+    --accent0-ffg: #632123;
+    --accent0-bg: #e0acac;
+    --accent0-bbg: #f5e8e8;
+    --accent0: #c82829;
+}
+
+:root.dark {
+    --shade7: #ffffff;
+    --shade6: #e0e0e0;
+    --shade5: #c5c8c6;
+    --shade4: #b4b7b4;
+    --shade3: #969896;
+    --shade2: #373b41;
+    --shade1: #282a2e;
+    --shade0: #1d1f21;
+    --base0F-fg: #ceb9b5;
+    --base0F-ffg: #f0ebea;
+    --base0F-bg: #825449;
+    --base0F-bbg: #513733;
+    --base0F: #a3685a;
+    --base0E-fg: #d5c8da;
+    --base0E-ffg: #f2eff3;
+    --base0E-bg: #8e7796;
+    --base0E-bbg: #594b5e;
+    --base0E: #b294bb;
+    --base0D-fg: #c1cedb;
+    --base0D-ffg: #edf0f4;
+    --base0D-bg: #678298;
+    --base0D-bbg: #42515f;
+    --base0D: #81a2be;
+    --base0C-fg: #c4dbd8;
+    --base0C-ffg: #edf4f3;
+    --base0C-bg: #6e9893;
+    --base0C-bbg: #465f5c;
+    --base0C: #8abeb7;
+    --base0B-fg: #bfd0ac;
+    --base0B-ffg: #ecf1e8;
+    --base0B-bg: #648627;
+    --base0B-bbg: #405423;
+    --base0B: #7da72a;
+    --base0A-fg: #f6dfbc;
+    --base0A-ffg: #fcf5ec;
+    --base0A-bg: #c09f5e;
+    --base0A-bbg: #77633d;
+    --base0A: #f0c674;
+    --base09-fg: #ecc8b6;
+    --base09-ffg: #f9eeea;
+    --base09-bg: #b2764d;
+    --base09-bbg: #6e4a35;
+    --base09: #de935f;
+    --base08-fg: #e2b8b8;
+    --base08-ffg: #f6eaea;
+    --base08-bg: #a35253;
+    --base08-bbg: #653637;
+    --base08: #cc6666;
+    --base07: #ffffff;
+    --base06: #e0e0e0;
+    --base05: #c5c8c6;
+    --base04: #b4b7b4;
+    --base03: #969896;
+    --base02: #373b41;
+    --base01: #282a2e;
+    --base00: #1d1f21;
+    --accent7-fg: #ceb9b5;
+    --accent7-ffg: #f0ebea;
+    --accent7-bg: #825449;
+    --accent7-bbg: #513733;
+    --accent7: #a3685a;
+    --accent6-fg: #d5c8da;
+    --accent6-ffg: #f2eff3;
+    --accent6-bg: #8e7796;
+    --accent6-bbg: #594b5e;
+    --accent6: #b294bb;
+    --accent5-fg: #c1cedb;
+    --accent5-ffg: #edf0f4;
+    --accent5-bg: #678298;
+    --accent5-bbg: #42515f;
+    --accent5: #81a2be;
+    --accent4-fg: #c4dbd8;
+    --accent4-ffg: #edf4f3;
+    --accent4-bg: #6e9893;
+    --accent4-bbg: #465f5c;
+    --accent4: #8abeb7;
+    --accent3-fg: #bfd0ac;
+    --accent3-ffg: #ecf1e8;
+    --accent3-bg: #648627;
+    --accent3-bbg: #405423;
+    --accent3: #7da72a;
+    --accent2-fg: #f6dfbc;
+    --accent2-ffg: #fcf5ec;
+    --accent2-bg: #c09f5e;
+    --accent2-bbg: #77633d;
+    --accent2: #f0c674;
+    --accent1-fg: #ecc8b6;
+    --accent1-ffg: #f9eeea;
+    --accent1-bg: #b2764d;
+    --accent1-bbg: #6e4a35;
+    --accent1: #de935f;
+    --accent0-fg: #e2b8b8;
+    --accent0-ffg: #f6eaea;
+    --accent0-bg: #a35253;
+    --accent0-bbg: #653637;
+    --accent0: #cc6666;
+}

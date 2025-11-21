@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathjax Morph Test</title>
+      <!-- MathJaX setup -->
+    <script>
+        window.MathJax = {
+            svg: { fontCache: 'global' },
+            options: {
+                menuOptions: {
+                    settings: {
+                        enrich: false,        // true to enable semantic-enrichment
+                        collapsible: false,   // true to enable collapsible math
+                        speech: false,        // true to enable speech generation
+                        braille: false,       // true to enable Braille generation
+                        assistiveMml: false,  // true to enable assistive MathML
+                    }
+                }
+            },
+            output: {
+                font: 'mathjax-newcm',
+            },
+            loader: {load: ['[tex]/html']},
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                packages: {'[+]': ['html']},
+            },
+        };
+    </script>
+    <script src="/support/vendor/mathjax/tex-svg-nofont.js" defer></script>
+    <script src="./morph-test.js" type="module" defer></script>
+    <style>
+        html {
+            font-size: 64px;
+        }
+        :root {
+            --foreground: #ddd;
+            background-color: #181818;
+            color: var(--foreground);
+        }
+        .red {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div style="position: relative;" class="transition-this-boi">
+        <!-- <p id="first">$\class{}{a^2 + 2 = c^3 - a}$</p>
+        <p id="second">$\class{}{a^2 + b^2 = c^2 + a}$</p> -->
+        <div id="first" style="position: absolute; top: 0; margin: 0; z-index: 1;">${{f(x)} = \displaystyle\sum_{n = 0}^x n \cdot \left( \class{red}{2 \cdot} \begin{bmatrix} 2 & n \\ \frac n2 & 2^p\end{bmatrix}\right)}$</div>
+        <div id="second" style="position: absolute; top: 0; margin: 0;">${{f(x)} = \displaystyle\sum_{n = 1}^x \frac{(n-1)}{ \left( \class{red}{2 \cdot} \begin{bmatrix} 2 & n^p \\ 1 & 2 \end{bmatrix}\right)}}$</div>
+    </div>
+    <button id="go-button" disabled>go</button>
+    <div>
+        <span>This is my cool math:</span>
+        <span id="cool-math" class="math-inline-container" data-math-start-index="0">
+            <!-- <span id="a" class="math-element">${a^2 + 2 = c^3 - a^2}$</span> -->
+            <span id="a" class="math-element">${{f(x)} = \displaystyle\sum_{n = 0}^x n \cdot \left( \class{red}{2 \cdot} \begin{bmatrix} 2 & n \\ \frac n2 & 2^p\end{bmatrix}\right)}$</span>
+            <span id="b" class="math-element">${{f(x)} = \displaystyle\sum_{n = 1}^x \frac{(n-1)}{ \left( \class{red}{2 \cdot} \begin{bmatrix} 2 & n^p \\ 1 & 2 \end{bmatrix}\right)}}$</span>
+            <span id="b" class="math-element">${a^2 + \class{}{b^2} = c^2 + a^2}$</span>
+            <span id="b" class="math-element" data-math-duration-from-to="300" data-math-stagger="0">${a^2 + \class{red}{b^2} = c^2 + a^2}$</span>
+            <!-- <span id="a" class="math-element" data-math-duration="5000">${a}$</span>
+            <span id="b" class="math-element" data-math-duration="5000">${\;a}$</span> -->
+        </span>
+        <span>yayyy</span>
+    </div>
+    <button id="go-button2" disabled>go</button>
+</body>
+</html>

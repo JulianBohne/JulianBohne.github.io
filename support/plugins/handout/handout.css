@@ -1,0 +1,297 @@
+html.handout #handout-container {
+  margin: auto;
+  overflow: unset;
+  touch-action: pan-x pan-y pinch-zoom;
+  scroll-behavior: smooth;
+}
+
+html.handout .reveal-viewport {
+  overflow: auto;
+}
+
+/* hide standard reveal element in handout mode, since it consumes space
+when switching to last slide through the menu */
+html.handout :not(#handout-container).reveal {
+  display: none;
+}
+
+html.handout .reveal .slides {
+  display: block;
+  width: var(--slide-width);
+  transform: scale(var(--scale-factor));
+  transform-origin: top center;
+  translate: -50% 0;
+  left: 50%;
+  margin: 0;
+}
+
+html.handout .reveal .slides section {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+  transition: none !important;
+  transform: none !important;
+  height: unset !important;
+}
+
+/* visualize central slide (DEBUG ONLY) */
+html.handout .reveal .slides section.current {
+  outline: 2px solid var(--primary-color);
+}
+
+html.handout .reveal .slides section .handoutBackground {
+  grid-area: common;
+  width: var(--slide-width);
+  height: var(--slide-height);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  object-fit: contain;
+  z-index: -1;
+}
+
+/* pass through mouse events to control video or interactive iframes */
+html.handout .reveal .slides section[data-background-video] > .decker,
+html.handout
+  .reveal
+  .slides
+  section[data-background-interactive="1"]
+  > .decker {
+  pointer-events: none;
+}
+
+html.handout .reveal .slides section.stack {
+  display: block !important;
+}
+
+html.handout .reveal .slides section:not(.stack) {
+  display: grid !important;
+  grid-template-areas: "common";
+  min-height: var(--slide-height);
+  align-items: start;
+  border-bottom: 1px solid var(--shade3);
+}
+
+html.handout .reveal .slides section .decker {
+  grid-area: common;
+  min-height: var(--slide-height);
+  width: var(--slide-width);
+  height: unset;
+}
+
+html.handout .reveal .slides section .whiteboard {
+  grid-area: common;
+  position: relative;
+}
+
+html.handout .reveal .backgrounds {
+  display: none;
+}
+
+html.handout .reveal .pause-overlay {
+  display: none;
+}
+
+html.handout .reveal .stack > p {
+  display: block;
+}
+
+html.handout .reveal .stack span.media {
+  display: block;
+}
+
+html.handout .reveal .slides section .stack {
+  counter-reset: stack-item;
+}
+
+html.handout .reveal .slides section .stack .fragment {
+  position: relative;
+  border: 1px solid var(--foreground-color);
+  margin: 0.5rem;
+}
+
+html.handout .reveal .slides section .stack .fragment img {
+  border: none;
+}
+
+html.handout .reveal .slides section .stack .fragment::before {
+  counter-increment: stack-item;
+  content: counter(stack-item);
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+  position: absolute;
+  font-size: 0.7em;
+  top: 0;
+  left: 0;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  vertical-align: middle;
+  z-index: 2;
+}
+
+html.handout .reveal .slides section .stack .fragment:not(.current-fragment) {
+  visibility: visible;
+}
+
+html .decker-anchor #handout-plus,
+html .decker-anchor #handout-minus {
+  display: none;
+}
+html.handout .decker-anchor #handout-plus,
+html.handout .decker-anchor #handout-minus {
+  display: inline-block;
+}
+
+/* animated button */
+
+#menu-handout-button {
+  position: relative;
+  --dwidth: var(--icon-size);
+  --dheight: calc(var(--dwidth) * 9 / 16);
+  --dcenterx: calc((100% / 2) - (0.5 * var(--dwidth)));
+  --dcentery: calc((100% / 2) - (0.5 * var(--dheight)));
+  --dhspace: calc(100% - 2 * var(--dheight));
+}
+
+#menu-handout-button div {
+  box-sizing: content-box;
+  background-color: var(--menu-header-text-color);
+  box-shadow: 0.125rem 0.125rem var(--menu-header-background-color);
+  border-radius: 0.15rem;
+  width: var(--dwidth);
+  height: var(--dheight);
+  transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+#menu-handout-button:hover div {
+  background-color: var(--accent3);
+}
+
+#menu-handout-button .top-anim-rect {
+  position: absolute;
+  top: calc(var(--dhspace) / 3);
+  left: var(--dcenterx);
+  z-index: 512;
+}
+
+#menu-handout-button .bottom-anim-rect {
+  position: absolute;
+  top: calc(var(--dhspace) / 3 * 2 + var(--dheight));
+  left: var(--dcenterx);
+  z-index: 511;
+}
+
+.handout #menu-handout-button .top-anim-rect {
+  position: absolute;
+  top: calc(var(--dcentery) - 0.3 * var(--dheight));
+  left: calc(var(--dcenterx) - 0.2 * var(--dwidth));
+  z-index: 512;
+}
+
+.handout #menu-handout-button .bottom-anim-rect {
+  position: absolute;
+  top: calc(var(--dcentery) + 0.3 * var(--dheight));
+  left: calc(var(--dcenterx) + 0.2 * var(--dwidth));
+  z-index: 511;
+}
+
+.handout .decker {
+  position: relative;
+}
+
+.handout-feedback-container {
+  text-align: center;
+  background-color: var(--shade1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em;
+  border: 2px solid var(--shade2);
+  border-radius: 0 0 1em 1em;
+  margin-bottom: 0.5em !important;
+}
+
+.handout-feedback-comments {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0.5em;
+  font-size: 1.5rem;
+  margin-top: 0.5em;
+}
+
+.handout-feedback-answer,
+.handout-feedback-comment {
+  position: relative;
+  font-size: 1em;
+  font-weight: normal;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  text-align: left;
+  box-sizing: border-box;
+  background-color: var(--background-color);
+}
+
+.handout-feedback-comment {
+  margin-right: 5em;
+  margin-left: 3em;
+  justify-content: flex-start;
+
+  &:before {
+    content: "🙄";
+    font-size: 1.7em;
+    position: absolute;
+    left: -2em;
+    top: 0;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    border: none;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    left: -0.9em;
+    bottom: auto;
+    border-width: 0.6em 0.9em 0.6em 0;
+    border-style: solid;
+    border-color: transparent var(--background-color);
+    display: block;
+    width: 0;
+  }
+}
+
+.handout-feedback-answer {
+  margin-left: 5em;
+  margin-right: 3em;
+  justify-content: flex-end;
+
+  &:before {
+    content: "🤓";
+    font-size: 1.7em;
+    position: absolute;
+    right: -2em;
+    top: 0;
+    width: 1.5em;
+    height: 1.5em;
+    text-align: center;
+    border: none;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0.7em;
+    right: -0.9em;
+    bottom: auto;
+    border-width: 0.6em 0 0.6em 0.9em;
+    border-style: solid;
+    border-color: transparent var(--background-color);
+    display: block;
+    width: 0;
+  }
+}

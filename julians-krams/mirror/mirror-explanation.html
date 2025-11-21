@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Mirror Explanation</title>
+    
+    <!-- MathJaX setup -->
+    <script defer>
+        window.MathJax = {
+            svg: { fontCache: 'global' },
+            options: {
+                menuOptions: {
+                    settings: {
+                        enrich: false,        // true to enable semantic-enrichment
+                        collapsible: false,   // true to enable collapsible math
+                        speech: false,        // true to enable speech generation
+                        braille: false,       // true to enable Braille generation
+                        assistiveMml: false,  // true to enable assistive MathML
+                    }
+                }
+            },
+            output: {
+                font: 'mathjax-newcm',
+            },
+            loader: {load: ['[tex]/html']},
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                packages: {'[+]': ['html']},
+            },
+        };
+    </script>
+    <script src="/support/vendor/mathjax/tex-svg-nofont.js" defer></script>
+    
+    <!-- three.js setup -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "/support/vendor/three/build/three.module.js",
+            "three/addons/": "/support/vendor/three/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/support/css/variables.css">
+    <link rel="stylesheet" href="/support/css/tudo-deck.css">
+    <link rel="stylesheet" href="../blender-icons/bl-icons.css">
+    <link rel="stylesheet" href="../style.css">
+
+    <script src="./mirror-explanation.js" type="module" defer></script>
+</head>
+<body>
+    <nav>
+        <label>
+            <input type="checkbox" name="edit_mode" id="edit_mode">
+            <span class="bl-icons-greasepencil"></span>
+        </label>
+        <label>
+            <input type="checkbox" name="interaction_mode" id="interaction_mode_translate">
+            <span class="bl-icons-empty_arrows"></span>
+        </label>
+        <label>
+            <input type="checkbox" name="interaction_mode" id="interaction_mode_rotate">
+            <span class="bl-icons-mesh_uvsphere"></span>
+        </label>
+    </nav>
+    <div id="panel-reflection" class="panel-right" style="font-size: 2rem; visibility: hidden;">
+        <div class="math-container">
+            <span class="math-element">${\cssId{math-c-1}{\class{blue}{\mathbf{c}}}}$</span>
+            <span class="math-element">${\cssId{math-n-2}{\class{yellow}{\mathbf{n}}}\cssId{math-c-2}{\class{blue}{\mathbf{c}}}}$</span>
+            <span class="math-element">${\class{purple}{(\class{yellow}{\mathbf{n}} \cdot \class{blue}{\mathbf{c}}) \mathbf{n}}}$</span>
+            <span class="math-element">${{\class{blue}{\mathbf{c}} - 2\class{purple}{(\class{yellow}{\mathbf{n}} \cdot \class{blue}{\mathbf{c}}) \mathbf{n}}}}$</span>
+            <span class="math-element">${\class{pink}{\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\class{blue}{\mathbf{c}})} = {\class{blue}{\mathbf{c}} - 2\class{purple}{(\class{yellow}{\mathbf{n}} \cdot \class{blue}{\mathbf{c}}) \mathbf{n}}}}$</span>
+            <span class="math-element">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{\data{marker-to=new}{n}}}}\data{marker-to=new}{(}\mathbf{v}\data{marker-to=new}{)} = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &\class{pink}{\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\class{blue}{\mathbf{c}})}
+                \end{align*}
+            $</span>
+            <span class="math-element">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{v}) = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &
+                \end{align*}
+            $</span>
+            <span class="math-element">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{v}) = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &\class{blue}{\mathbf{f}}
+                \end{align*}
+            $</span>
+            <span class="math-element">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{v}) = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &\class{pink}{\mathbf{\hat{f}}} = \mathbf{r}_{\class{yellow}{\mathbf{n}}}(\class{blue}{\mathbf{f}})
+                \end{align*}
+            $</span>
+            <span class="math-element" data-math-stagger-in="0">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{v}) = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &\class{pink}{\mathbf{\hat{f}}} = \mathbf{r}_{\class{yellow}{\mathbf{n}}}(\class{blue}{\mathbf{f}})\\
+                    &\mathbf{\hat{u}} = \mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{u}) \; \class{gray}{\textrm{(up vector)}}
+                \end{align*}
+            $</span>
+            <span class="math-element" data-math-stagger-out="0">$
+                \begin{align*}
+                    &\mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{v}) = \mathbf{v} - 2(\class{yellow}{\mathbf{n}} \cdot \mathbf{v}) \mathbf{n} \\
+                    &\class{pink}{\mathbf{\hat{f}}} = \mathbf{r}_{\class{yellow}{\mathbf{n}}}(\class{blue}{\mathbf{f}})\\
+                    &\mathbf{\hat{u}} = \mathbf{r}_{\class{yellow}{\mathbf{n}}}(\mathbf{u}) \; \class{gray}{\textrm{(up vector)}}\\
+                    &\class{purple}{\mathbf{\hat{r}}} = \class{pink}{\mathbf{\hat{f}}} \times \mathbf{\hat{u}}
+                \end{align*}
+            $</span>
+        </div>
+    </div>
+    <div id="panel-frustum" class="panel-right" style="font-size: 2rem; visibility: hidden;">
+        <div class="math-container math-background">
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$
+                \mathbf{P} = \begin{bmatrix}
+                    \frac{2n}{r-l}     & \data{marker=-}{0} &  \frac{r + l}{r - l} & \data{marker=-}{0} \\
+                    \data{marker=-}{0} & \frac{2n}{t - b}   &  \frac{t + b}{t - b} & \data{marker=-}{0} \\
+                    0                  & 0                  & -\frac{f + n}{f - n} & -\frac{2fn}{f-n}   \\
+                    \data{marker=-}{0} & \data{marker=-}{0} & -1                   & \data{marker=-}{0}
+                \end{bmatrix}
+            $$</span>
+            <span class="math-element" data-math-stagger-out="10">$${
+                \mathbf{P}_3 = \begin{bmatrix}
+                    0 & 0 & -\frac{f + n}{f - n} & -\frac{2fn}{f-n}
+                \end{bmatrix}
+            }$$</span>
+            <span class="math-element">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top \\
+                &\Rightarrow p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z}
+            \end{align*}$$</span>
+            <span class="math-element">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} = 0 \\
+                &\Rightarrow p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z}
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-out="0" data-math-stagger-from-to="300">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} = 0 \\
+                &\overset{!}{\Rightarrow} p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z} = -1
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-out="0">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} - \data{marker=unique}{1} = -1 \\
+                &\overset{!}{\Rightarrow} p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z} = -1
+                \end{align*}$$</span>
+            <span class="math-element">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} + \frac{p_z}{-p_z} = -1 \\
+                &\overset{!}{\Rightarrow} p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z} = -1
+            \end{align*}$$</span>
+            <span class="math-element">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\frac{\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} + \data{marker=one}{1} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p}}{-p_z} = -1 \\
+                &\overset{!}{\Rightarrow} {p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z} = -1}
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-out="10">$$\begin{align*}
+                &\mathbf{p} = \begin{bmatrix} p_x & p_y & p_z & 1 \end{bmatrix}^\top, \\
+                &\frac{\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} + \data{marker=one}{1} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p}}{-p_z} = -1, \\
+                &\mathbf{P}_3 = \begin{bmatrix} \data{marker=mark}{\class{yellow}{n_x}} & \data{marker=mark}{\class{yellow}{n_y}} & \data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-d}} \end{bmatrix} \\
+                &\Rightarrow {p_z' = \frac{\mathbf{P}_3^\top \cdot \mathbf{p}}{\data{marker=minus}{-}p_z} = -1}
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$
+                \mathbf{P} = \begin{bmatrix}
+                    \frac{2\data{marker=-}{n}}{r\data{marker=-}{-}l}      & \data{marker=-}{0}  &  \frac{r \data{marker=-}{+} l}{r \data{marker=-}{-} l}    & \data{marker=-}{0} \\
+                    \data{marker=-}{0}  & \frac{2\data{marker=-}{n}}{t \data{marker=-}{-} b}    &  \frac{t \data{marker=-}{+} b}{t \data{marker=-}{-} b}    & \data{marker=-}{0} \\
+                    \data{marker=mark}{\class{yellow}{n_x}} & \data{marker=mark}{\class{yellow}{n_y}} & \data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-d}} \\
+                    \data{marker=-}{0}  & \data{marker=-}{0}  & \data{marker=-}{-}\data{marker=-}{1}                      & \data{marker=-}{0}
+                \end{bmatrix}
+            $$</span>
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$\begin{align*}
+                &\mathbf{P} = \begin{bmatrix}
+                    \frac{2\data{marker=-}{n}}{r\data{marker=-}{-}l}      & \data{marker=-}{0}  &  \frac{r \data{marker=-}{+} l}{r \data{marker=-}{-} l}    & \data{marker=-}{0} \\
+                    \data{marker=-}{0}  & \frac{2\data{marker=-}{n}}{t \data{marker=-}{-} b}    &  \frac{t \data{marker=-}{+} b}{t \data{marker=-}{-} b}    & \data{marker=-}{0} \\
+                    \data{marker=mark}{\class{yellow}{n_x}} & \data{marker=mark}{\class{yellow}{n_y}} & \data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-d}} \\
+                    \data{marker=-}{0}  & \data{marker=-}{0}  & \data{marker=-}{-}\data{marker=-}{1}                      & \data{marker=-}{0}
+                \end{bmatrix}\\
+                &\\
+                &\begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} = 0
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$\begin{align*}
+                &\mathbf{P} = \begin{bmatrix}
+                    \frac{2\data{marker=-}{n}}{r\data{marker=-}{-}l}      & \data{marker=-}{0}  &  \frac{r \data{marker=-}{+} l}{r \data{marker=-}{-} l}    & \data{marker=-}{0} \\
+                    \data{marker=-}{0}  & \frac{2\data{marker=-}{n}}{t \data{marker=-}{-} b}    &  \frac{t \data{marker=-}{+} b}{t \data{marker=-}{-} b}    & \data{marker=-}{0} \\
+                    \data{marker=mark}{\class{yellow}{n_x}} & \data{marker=mark}{\class{yellow}{n_y}} & \data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-d}} \\
+                    \data{marker=-}{0}  & \data{marker=-}{0}  & \data{marker=-}{-}\data{marker=-}{1}                      & \data{marker=-}{0}
+                \end{bmatrix}\\
+                &\\
+                &\class{pink}{a} \; \begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} = 0
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$\begin{align*}
+                &\mathbf{P} = \begin{bmatrix}
+                    \frac{2\data{marker=-}{n}}{r\data{marker=-}{-}l}      & \data{marker=-}{0}  &  \frac{r \data{marker=-}{+} l}{r \data{marker=-}{-} l}    & \data{marker=-}{0} \\
+                    \data{marker=-}{0}  & \frac{2\data{marker=-}{n}}{t \data{marker=-}{-} b}    &  \frac{t \data{marker=-}{+} b}{t \data{marker=-}{-} b}    & \data{marker=-}{0} \\
+                    \class{pink}{a}\data{marker=mark}{\class{yellow}{n_x}} & \class{pink}{a}\data{marker=mark}{\class{yellow}{n_y}} & \class{pink}{a}\data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-\class{pink}{a}d}} \\
+                    \data{marker=-}{0}  & \data{marker=-}{0}  & \data{marker=-}{-}\data{marker=-}{1}                      & \data{marker=-}{0}
+                \end{bmatrix}\\
+                &\\
+                &\class{pink}{a} \; \begin{bmatrix} \class{yellow}{n_x} & \class{yellow}{n_y} & \class{yellow}{n_z} & \class{purple}{-d} \end{bmatrix}^\top \cdot \mathbf{p} = 0
+            \end{align*}$$</span>
+            <span class="math-element" data-math-stagger-in="10" data-math-stagger-out="10">$$\begin{align*}
+                &\mathbf{P} = \begin{bmatrix}
+                    \frac{2\data{marker=-}{n}}{r\data{marker=-}{-}l}      & \data{marker=-}{0}  &  \frac{r \data{marker=-}{+} l}{r \data{marker=-}{-} l}    & \data{marker=-}{0} \\
+                    \data{marker=-}{0}  & \frac{2\data{marker=-}{n}}{t \data{marker=-}{-} b}    &  \frac{t \data{marker=-}{+} b}{t \data{marker=-}{-} b}    & \data{marker=-}{0} \\
+                    \class{pink}{a}\data{marker=mark}{\class{yellow}{n_x}} & \class{pink}{a}\data{marker=mark}{\class{yellow}{n_y}} & \class{pink}{a}\data{marker=mark}{\class{yellow}{n_z} + 1} & \data{marker=mark}{\class{purple}{-\class{pink}{a}d}} \\
+                    \data{marker=-}{0}  & \data{marker=-}{0}  & \data{marker=-}{-}\data{marker=-}{1}                      & \data{marker=-}{0}
+                \end{bmatrix}
+            \end{align*}$$</span>
+        </div>
+        <div id="interactive-math" class="math pink hide-interactive-math">$a =$ <span id="interactive-math-number">1</span></div>
+    </div>
+    <div id="what-about-vr" class="panel-right hide" style="font-size: 2rem; width: 45%;">
+        <div class="hide" style="font-size: 2.5rem">What about VR?</div>
+        <ul class="hide"><li>Double cameras & render textures</li></ul>
+        <ul class="hide"><li>Switch in shader based on eye</li></ul>
+    </div>
+</body>
+</html>
