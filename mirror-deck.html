@@ -295,6 +295,34 @@
 <div class="layout">
 <div class="area">
 <div class="box block">
+<p><link rel="stylesheet" href="/julians-krams/blender-icons/bl-icons.css"> <link rel="stylesheet" href="/julians-krams/icon-button-style.css"></p>
+<div class="fullscreen-container">
+<label><input type="checkbox" name="fullscreen_button" id="fullscreen_button"><span id="fullscreen_button_icon" class="bl-icons-fullscreen_enter"></span></label>
+</div>
+<script>
+  const fullscreenButton = document.getElementById('fullscreen_button');
+  const fullscreenButtonIcon = document.getElementById('fullscreen_button_icon');
+  function checkFullscreen() {
+    if (document.fullscreenElement) {
+      fullscreenButtonIcon.classList.remove('bl-icons-fullscreen_enter');
+      fullscreenButtonIcon.classList.add('bl-icons-fullscreen_exit');
+      fullscreenButton.checked = true;
+    } else {
+      fullscreenButtonIcon.classList.remove('bl-icons-fullscreen_exit');
+      fullscreenButtonIcon.classList.add('bl-icons-fullscreen_enter');
+      fullscreenButton.checked = false;
+    }
+  }
+  checkFullscreen();
+  fullscreenButton.addEventListener('change', () => {
+    if (fullscreenButton.checked) {
+      document.querySelector('html').requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  });
+  document.onfullscreenchange = checkFullscreen;
+</script>
 <!-- Keyframe Plugin Setup -->
 <script src="/julians-krams/keyframe-plugin/keyframeFragmentCreator.js"></script>
 <script src="/julians-krams/keyframe-plugin/keyframe.js" type="module" defer></script>

@@ -1,0 +1,56 @@
+.fullscreen-container {
+  --icon-size: 3rem;
+  --shade-size: 2px;
+  margin: 1rem;
+  padding: calc(var(--shade-size) * 2);
+  display: flex;
+  box-sizing: content-box;
+  width: fit-content;
+  justify-items: center;
+  overflow: hidden;
+  gap: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  & > * {
+    display: flex;
+    min-width: var(--icon-size);
+    width: var(--icon-size);
+    height: var(--icon-size);
+    justify-content: center;
+    align-items: center;
+  }
+}
+.fullscreen-container > label:has(input[type="radio"], input[type="checkbox"]) {
+  & > input {
+    /* this is not accessible */
+    display: none;
+  }
+  & > span {
+    font-size: calc(var(--icon-size) * 0.75);
+    transition: all 0.1s;
+  }
+  &:has(:checked) {
+    color: var(--foreground-color);
+    border: 2px solid var(--foreground-color);
+    box-shadow: var(--shade-size) var(--shade-size) 0 0 var(--foreground-color), inset 0 0 0 0 var(--foreground-color);
+    transform: translate(calc(-1 * var(--shade-size)), calc(-1 * var(--shade-size)));
+  }
+  &:has(:active) {
+    transform: translate(0, 0);
+    & > span {
+      transform: translate(var(--shade-size), var(--shade-size));
+    }
+    border: 2px solid var(--foreground-color);
+    box-shadow: 0 0 0 0 var(--foreground-color), inset var(--shade-size) var(--shade-size) 0 0 var(--foreground-color);
+  }
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+  transition: all 0.1s;
+  box-sizing: border-box;
+  color: gray;
+  border: 2px solid gray;
+  background-color: var(--background-color);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
