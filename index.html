@@ -1,436 +1,561 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" >
 
-<head>
-  <meta charset="utf-8">
-  <meta name="generator" content="pandoc">
-  <meta name="author" content="Julian Bohnenkämper">
-  <title> Virtual Mirrors</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="pandoc">
 
-  <!-- PWA stuff -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="support/pwa/icon.png">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#84b819" />
-  <link rel="manifest" href="support/pwa/manifest.webmanifest" crossorigin="use-credentials" />
+    <!-- PWA Kram -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="support/pwa/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#84b819" />
+    <link rel="manifest" href="support/pwa/manifest.webmanifest" crossorigin="use-credentials" />
 
+    <script type="module">
+      /* Store JSON encoded Pandoc meta data in a global variable. */
+      import initializeDecker from "./support/js/decker.js";
+      initializeDecker("528c3923d.json");
+    </script>
 
-  <script type="module">
-    /* Store JSON encoded Pandoc meta data in a global variable. */
-    import initializeDecker from "./support/js/decker.js";
-    initializeDecker("5d6ebac01.json");
-  </script>
+    <title>Decker: Inhaltsverzeichnis</title>
 
-    <!-- Default values for CSS variables can live here. They can be overridden by
-    meta data values. -->
+    
+    <!-- style sheets ------------------------------------------------------->
+
     <link rel="stylesheet" href="support/css/variables.css">
-  
-    <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
-    into a style sheet. Default values can come from `variables.css`. -->
+
     <style class="css-declarations">
       :root {
-                --shade7: #1d1f21;
-                --shade6: #282a2e;
-                --shade5: #4d4d4c;
-                --shade4: #969896;
-                --shade3: #8e908c;
-                --shade2: #d6d6d6;
-                --shade1: #eeeeee;
-                --shade0: #ffffff;
-                --base0F-fg: #825449;
-                --base0F-ffg: #513733;
-                --base0F-bg: #ceb9b5;
-                --base0F-bbg: #f0ebea;
-                --base0F: #a3685a;
-                --base0E-fg: #6e4887;
-                --base0E-ffg: #453155;
-                --base0E-bg: #c4b5d1;
-                --base0E-bbg: #edeaf1;
-                --base0E: #8959a8;
-                --base0D-fg: #257eb3;
-                --base0D-ffg: #204f6f;
-                --base0D-bg: #acccec;
-                --base0D-bbg: #e8f0f9;
-                --base0D: #2a9ddf;
-                --base0C-fg: #347b80;
-                --base0C-ffg: #264d51;
-                --base0C-bg: #afcacd;
-                --base0C-bbg: #e8eff0;
-                --base0C: #3e999f;
-                --base0B-fg: #6a931c;
-                --base0B-ffg: #435c20;
-                --base0B-bg: #c2d8ab;
-                --base0B-bbg: #edf3e7;
-                --base0B: #84b819;
-                --base0A-fg: #bb9212;
-                --base0A-ffg: #745b1d;
-                --base0A-bg: #f3d8aa;
-                --base0A-bbg: #fbf3e7;
-                --base0A: #eab700;
-                --base09-fg: #c46c20;
-                --base09-ffg: #794521;
-                --base09-bg: #f9c3ab;
-                --base09-bbg: #fdede7;
-                --base09: #f5871f;
-                --base08-fg: #a02526;
-                --base08-ffg: #632123;
-                --base08-bg: #e0acac;
-                --base08-bbg: #f5e8e8;
-                --base08: #c82829;
-                --base07: #1d1f21;
-                --base06: #282a2e;
-                --base05: #4d4d4c;
-                --base04: #969896;
-                --base03: #8e908c;
-                --base02: #d6d6d6;
-                --base01: #eeeeee;
-                --base00: #ffffff;
-                --accent7-fg: #825449;
-                --accent7-ffg: #513733;
-                --accent7-bg: #ceb9b5;
-                --accent7-bbg: #f0ebea;
-                --accent7: #a3685a;
-                --accent6-fg: #6e4887;
-                --accent6-ffg: #453155;
-                --accent6-bg: #c4b5d1;
-                --accent6-bbg: #edeaf1;
-                --accent6: #8959a8;
-                --accent5-fg: #257eb3;
-                --accent5-ffg: #204f6f;
-                --accent5-bg: #acccec;
-                --accent5-bbg: #e8f0f9;
-                --accent5: #2a9ddf;
-                --accent4-fg: #347b80;
-                --accent4-ffg: #264d51;
-                --accent4-bg: #afcacd;
-                --accent4-bbg: #e8eff0;
-                --accent4: #3e999f;
-                --accent3-fg: #6a931c;
-                --accent3-ffg: #435c20;
-                --accent3-bg: #c2d8ab;
-                --accent3-bbg: #edf3e7;
-                --accent3: #84b819;
-                --accent2-fg: #bb9212;
-                --accent2-ffg: #745b1d;
-                --accent2-bg: #f3d8aa;
-                --accent2-bbg: #fbf3e7;
-                --accent2: #eab700;
-                --accent1-fg: #c46c20;
-                --accent1-ffg: #794521;
-                --accent1-bg: #f9c3ab;
-                --accent1-bbg: #fdede7;
-                --accent1: #f5871f;
-                --accent0-fg: #a02526;
-                --accent0-ffg: #632123;
-                --accent0-bg: #e0acac;
-                --accent0-bbg: #f5e8e8;
-                --accent0: #c82829;
-            }
+                  --shade7: #1d1f21;
+                  --shade6: #282a2e;
+                  --shade5: #4d4d4c;
+                  --shade4: #969896;
+                  --shade3: #8e908c;
+                  --shade2: #d6d6d6;
+                  --shade1: #eeeeee;
+                  --shade0: #ffffff;
+                  --base0F-fg: #825449;
+                  --base0F-ffg: #513733;
+                  --base0F-bg: #ceb9b5;
+                  --base0F-bbg: #f0ebea;
+                  --base0F: #a3685a;
+                  --base0E-fg: #6e4887;
+                  --base0E-ffg: #453155;
+                  --base0E-bg: #c4b5d1;
+                  --base0E-bbg: #edeaf1;
+                  --base0E: #8959a8;
+                  --base0D-fg: #257eb3;
+                  --base0D-ffg: #204f6f;
+                  --base0D-bg: #acccec;
+                  --base0D-bbg: #e8f0f9;
+                  --base0D: #2a9ddf;
+                  --base0C-fg: #347b80;
+                  --base0C-ffg: #264d51;
+                  --base0C-bg: #afcacd;
+                  --base0C-bbg: #e8eff0;
+                  --base0C: #3e999f;
+                  --base0B-fg: #6a931c;
+                  --base0B-ffg: #435c20;
+                  --base0B-bg: #c2d8ab;
+                  --base0B-bbg: #edf3e7;
+                  --base0B: #84b819;
+                  --base0A-fg: #bb9212;
+                  --base0A-ffg: #745b1d;
+                  --base0A-bg: #f3d8aa;
+                  --base0A-bbg: #fbf3e7;
+                  --base0A: #eab700;
+                  --base09-fg: #c46c20;
+                  --base09-ffg: #794521;
+                  --base09-bg: #f9c3ab;
+                  --base09-bbg: #fdede7;
+                  --base09: #f5871f;
+                  --base08-fg: #a02526;
+                  --base08-ffg: #632123;
+                  --base08-bg: #e0acac;
+                  --base08-bbg: #f5e8e8;
+                  --base08: #c82829;
+                  --base07: #1d1f21;
+                  --base06: #282a2e;
+                  --base05: #4d4d4c;
+                  --base04: #969896;
+                  --base03: #8e908c;
+                  --base02: #d6d6d6;
+                  --base01: #eeeeee;
+                  --base00: #ffffff;
+                  --accent7-fg: #825449;
+                  --accent7-ffg: #513733;
+                  --accent7-bg: #ceb9b5;
+                  --accent7-bbg: #f0ebea;
+                  --accent7: #a3685a;
+                  --accent6-fg: #6e4887;
+                  --accent6-ffg: #453155;
+                  --accent6-bg: #c4b5d1;
+                  --accent6-bbg: #edeaf1;
+                  --accent6: #8959a8;
+                  --accent5-fg: #257eb3;
+                  --accent5-ffg: #204f6f;
+                  --accent5-bg: #acccec;
+                  --accent5-bbg: #e8f0f9;
+                  --accent5: #2a9ddf;
+                  --accent4-fg: #347b80;
+                  --accent4-ffg: #264d51;
+                  --accent4-bg: #afcacd;
+                  --accent4-bbg: #e8eff0;
+                  --accent4: #3e999f;
+                  --accent3-fg: #6a931c;
+                  --accent3-ffg: #435c20;
+                  --accent3-bg: #c2d8ab;
+                  --accent3-bbg: #edf3e7;
+                  --accent3: #84b819;
+                  --accent2-fg: #bb9212;
+                  --accent2-ffg: #745b1d;
+                  --accent2-bg: #f3d8aa;
+                  --accent2-bbg: #fbf3e7;
+                  --accent2: #eab700;
+                  --accent1-fg: #c46c20;
+                  --accent1-ffg: #794521;
+                  --accent1-bg: #f9c3ab;
+                  --accent1-bbg: #fdede7;
+                  --accent1: #f5871f;
+                  --accent0-fg: #a02526;
+                  --accent0-ffg: #632123;
+                  --accent0-bg: #e0acac;
+                  --accent0-bbg: #f5e8e8;
+                  --accent0: #c82829;
+              }
       :root.dark {
-                --shade7: #ffffff;
-                --shade6: #e0e0e0;
-                --shade5: #c5c8c6;
-                --shade4: #b4b7b4;
-                --shade3: #969896;
-                --shade2: #373b41;
-                --shade1: #282a2e;
-                --shade0: #1d1f21;
-                --base0F-fg: #ceb9b5;
-                --base0F-ffg: #f0ebea;
-                --base0F-bg: #825449;
-                --base0F-bbg: #513733;
-                --base0F: #a3685a;
-                --base0E-fg: #d5c8da;
-                --base0E-ffg: #f2eff3;
-                --base0E-bg: #8e7796;
-                --base0E-bbg: #594b5e;
-                --base0E: #b294bb;
-                --base0D-fg: #c1cedb;
-                --base0D-ffg: #edf0f4;
-                --base0D-bg: #678298;
-                --base0D-bbg: #42515f;
-                --base0D: #81a2be;
-                --base0C-fg: #c4dbd8;
-                --base0C-ffg: #edf4f3;
-                --base0C-bg: #6e9893;
-                --base0C-bbg: #465f5c;
-                --base0C: #8abeb7;
-                --base0B-fg: #bfd0ac;
-                --base0B-ffg: #ecf1e8;
-                --base0B-bg: #648627;
-                --base0B-bbg: #405423;
-                --base0B: #7da72a;
-                --base0A-fg: #f6dfbc;
-                --base0A-ffg: #fcf5ec;
-                --base0A-bg: #c09f5e;
-                --base0A-bbg: #77633d;
-                --base0A: #f0c674;
-                --base09-fg: #ecc8b6;
-                --base09-ffg: #f9eeea;
-                --base09-bg: #b2764d;
-                --base09-bbg: #6e4a35;
-                --base09: #de935f;
-                --base08-fg: #e2b8b8;
-                --base08-ffg: #f6eaea;
-                --base08-bg: #a35253;
-                --base08-bbg: #653637;
-                --base08: #cc6666;
-                --base07: #ffffff;
-                --base06: #e0e0e0;
-                --base05: #c5c8c6;
-                --base04: #b4b7b4;
-                --base03: #969896;
-                --base02: #373b41;
-                --base01: #282a2e;
-                --base00: #1d1f21;
-                --accent7-fg: #ceb9b5;
-                --accent7-ffg: #f0ebea;
-                --accent7-bg: #825449;
-                --accent7-bbg: #513733;
-                --accent7: #a3685a;
-                --accent6-fg: #d5c8da;
-                --accent6-ffg: #f2eff3;
-                --accent6-bg: #8e7796;
-                --accent6-bbg: #594b5e;
-                --accent6: #b294bb;
-                --accent5-fg: #c1cedb;
-                --accent5-ffg: #edf0f4;
-                --accent5-bg: #678298;
-                --accent5-bbg: #42515f;
-                --accent5: #81a2be;
-                --accent4-fg: #c4dbd8;
-                --accent4-ffg: #edf4f3;
-                --accent4-bg: #6e9893;
-                --accent4-bbg: #465f5c;
-                --accent4: #8abeb7;
-                --accent3-fg: #bfd0ac;
-                --accent3-ffg: #ecf1e8;
-                --accent3-bg: #648627;
-                --accent3-bbg: #405423;
-                --accent3: #7da72a;
-                --accent2-fg: #f6dfbc;
-                --accent2-ffg: #fcf5ec;
-                --accent2-bg: #c09f5e;
-                --accent2-bbg: #77633d;
-                --accent2: #f0c674;
-                --accent1-fg: #ecc8b6;
-                --accent1-ffg: #f9eeea;
-                --accent1-bg: #b2764d;
-                --accent1-bbg: #6e4a35;
-                --accent1: #de935f;
-                --accent0-fg: #e2b8b8;
-                --accent0-ffg: #f6eaea;
-                --accent0-bg: #a35253;
-                --accent0-bbg: #653637;
-                --accent0: #cc6666;
-            }
+                  --shade7: #ffffff;
+                  --shade6: #e0e0e0;
+                  --shade5: #c5c8c6;
+                  --shade4: #b4b7b4;
+                  --shade3: #969896;
+                  --shade2: #373b41;
+                  --shade1: #282a2e;
+                  --shade0: #1d1f21;
+                  --base0F-fg: #ceb9b5;
+                  --base0F-ffg: #f0ebea;
+                  --base0F-bg: #825449;
+                  --base0F-bbg: #513733;
+                  --base0F: #a3685a;
+                  --base0E-fg: #d5c8da;
+                  --base0E-ffg: #f2eff3;
+                  --base0E-bg: #8e7796;
+                  --base0E-bbg: #594b5e;
+                  --base0E: #b294bb;
+                  --base0D-fg: #c1cedb;
+                  --base0D-ffg: #edf0f4;
+                  --base0D-bg: #678298;
+                  --base0D-bbg: #42515f;
+                  --base0D: #81a2be;
+                  --base0C-fg: #c4dbd8;
+                  --base0C-ffg: #edf4f3;
+                  --base0C-bg: #6e9893;
+                  --base0C-bbg: #465f5c;
+                  --base0C: #8abeb7;
+                  --base0B-fg: #bfd0ac;
+                  --base0B-ffg: #ecf1e8;
+                  --base0B-bg: #648627;
+                  --base0B-bbg: #405423;
+                  --base0B: #7da72a;
+                  --base0A-fg: #f6dfbc;
+                  --base0A-ffg: #fcf5ec;
+                  --base0A-bg: #c09f5e;
+                  --base0A-bbg: #77633d;
+                  --base0A: #f0c674;
+                  --base09-fg: #ecc8b6;
+                  --base09-ffg: #f9eeea;
+                  --base09-bg: #b2764d;
+                  --base09-bbg: #6e4a35;
+                  --base09: #de935f;
+                  --base08-fg: #e2b8b8;
+                  --base08-ffg: #f6eaea;
+                  --base08-bg: #a35253;
+                  --base08-bbg: #653637;
+                  --base08: #cc6666;
+                  --base07: #ffffff;
+                  --base06: #e0e0e0;
+                  --base05: #c5c8c6;
+                  --base04: #b4b7b4;
+                  --base03: #969896;
+                  --base02: #373b41;
+                  --base01: #282a2e;
+                  --base00: #1d1f21;
+                  --accent7-fg: #ceb9b5;
+                  --accent7-ffg: #f0ebea;
+                  --accent7-bg: #825449;
+                  --accent7-bbg: #513733;
+                  --accent7: #a3685a;
+                  --accent6-fg: #d5c8da;
+                  --accent6-ffg: #f2eff3;
+                  --accent6-bg: #8e7796;
+                  --accent6-bbg: #594b5e;
+                  --accent6: #b294bb;
+                  --accent5-fg: #c1cedb;
+                  --accent5-ffg: #edf0f4;
+                  --accent5-bg: #678298;
+                  --accent5-bbg: #42515f;
+                  --accent5: #81a2be;
+                  --accent4-fg: #c4dbd8;
+                  --accent4-ffg: #edf4f3;
+                  --accent4-bg: #6e9893;
+                  --accent4-bbg: #465f5c;
+                  --accent4: #8abeb7;
+                  --accent3-fg: #bfd0ac;
+                  --accent3-ffg: #ecf1e8;
+                  --accent3-bg: #648627;
+                  --accent3-bbg: #405423;
+                  --accent3: #7da72a;
+                  --accent2-fg: #f6dfbc;
+                  --accent2-ffg: #fcf5ec;
+                  --accent2-bg: #c09f5e;
+                  --accent2-bbg: #77633d;
+                  --accent2: #f0c674;
+                  --accent1-fg: #ecc8b6;
+                  --accent1-ffg: #f9eeea;
+                  --accent1-bg: #b2764d;
+                  --accent1-bbg: #6e4a35;
+                  --accent1: #de935f;
+                  --accent0-fg: #e2b8b8;
+                  --accent0-ffg: #f6eaea;
+                  --accent0-bg: #a35253;
+                  --accent0-bbg: #653637;
+                  --accent0: #cc6666;
+              }
       :root {
-            }
+              }
     </style>
-  
-    <link rel="stylesheet" href="support/vendor/reveal/dist/reset.css">
-    <link rel="stylesheet" href="support/vendor/reveal/dist/reveal.css">
-    <link rel="stylesheet" href="support/components/components.css">
-    <link rel="stylesheet" href="support/plugins/decker/ui-anchors.css">
-    <link rel="stylesheet" href="support/plugins/whiteboard/whiteboard.css">
-    <link rel="stylesheet" href="support/plugins/menu/menu.css">
-    <link rel="stylesheet" href="support/plugins/feedback/feedback.css">
-    <link rel="stylesheet" href="support/vendor/videojs/video-js.min.css">
-    <link rel="stylesheet" href="support/plugins/explain/explain.css">
-      <link rel="stylesheet" href="support/plugins/live-captioning/live-captioning.css">
-      <link rel="stylesheet" href="support/plugins/quiz-wue/quiz-wue.css">
-    <link rel="stylesheet" href="support/plugins/quizzer/quizzer.css">
-    <link rel="stylesheet" href="support/css/deck.css">
-    <link rel="stylesheet" href="support/css/tudo-deck.css">
-      <link rel="stylesheet" href="support/fonts/lato.css">
-      <link rel="stylesheet" href="support/plugins/handout/handout.css">
-      
-</head>
+    <style>
+          </style>
 
-<body >
-  <div class="reveal">
-    <div class="slides">
+    <link rel="stylesheet" href="support/css/index.css">
+    <link rel="stylesheet" href="support/css/tudo-index.css">
+        <link rel="stylesheet" href="support/fonts/lato.css">
+        
+  </head>
 
-      <section id="title-slide">
-  <div class="decker">
-    <div class="alignment">
-      <header class="background-on-accent">
-        <h1 class="title">
-        <span class="title-title">Virtual Mirrors</span>
-        </h1>
-      </header>
+  <!-- main content ------------------------------------------------------->
+  <body class="index" onload="initIndexPage()">
+    
+    <!-- page header -->
+    <header>
+              <h1>Virtual Mirrors</h1>
+        <button id="index-color-button" class="fa-button"></button>
+    </header>
 
-      
-            
-            <div class="author">
-                
-              <p>
-                Julian Bohnenkämper
-              </p>
+    <!-- main content -->
+    <main class="content">
+
+            <details class="howto">
+              <summary>
+                <span class="english">How to use Decker</span>
+                <span class="german">Anleitung für Decker</span>
+              </summary>
+              <select class="howto-lang-select" onchange='this.parentElement.setAttribute("lang", this.selectedOptions[0].value); blur();'>
+                  <option value="en">🇺🇸</option>
+                  <option value="de">🇩🇪</option>
+              </select>
+              <script>
+            const scripts = document.querySelectorAll("script");
+            const thisScript = scripts[scripts.length - 1]; // The currently executed script is always the one loaded most recently (unless deferred)
+            const detail = thisScript.closest("details");
+            const langSelect = detail.querySelector(".howto-lang-select");
+            if(langSelect) {
+              const lang = document.documentElement.lang || window?.Decker?.meta?.lang;
+              const select = langSelect.querySelector("option[value="+lang+"]");
+              select.setAttribute("selected", "selected");
+            }
+              </script>
+              <div class="german">
+                <h2 id="navigation">Navigation</h2>
+                <p>Die Oberfläche eines Foliensatzes erlaubt folgende Grundaktionen:</p>
+                <ul>
+                  <li>Mit <strong>Cursor-links</strong> und <strong>Cursor-rechts</strong> können Sie durch die Folien blättern.</li>
+                  <li>Mit <strong>Cursor-runter</strong> und <strong>Cursor-hoch</strong> können Sie — falls vorhanden — Unterfolien zur aktuellen Folie aufsuchen.</li>
+                  <li>Die <span class="sr-only">Burger-Menu</span><i class="fas fa-bars" alt="Burger-Menu"></i> Schaltfläche (links oben) öffnet das Navigationsmenü.</li>
+                  <li>Die <span class="sr-only">Fragezeichen</span><span style="display: inline-grid; grid-template-areas: &quot;icons&quot;; justify-items: center; align-items: center;" alt="Fragezeichensprechblase"><i class="fas fa-message" style="grid-area: icons;"></i><i class="fas fa-question" style="grid-area: icons; color: var(--background-color); font-size: 60%;"></i></span> Schaltfläche (rechts oben) öffnet das Menu zum Stellen von Fragen zur aktuellen Folie.</li>
+                  <li>Die <span class="sr-only">Abspielen</span><i class="fas fa-play" alt="Abspielen"></i> Schaltfläche (rechts oben) startet — wenn vorhanden — die Präsentationsaufzeichnung bei der aktuellen Folie.</li>
+                  <li>Mit <strong>STRG-F</strong> oder <strong>CMD-F</strong> können Sie den den Suchdialog öffnen.</li>
+                  <li>Mit mit <strong>ESC</strong> können Sie aktive Menus und Dialoge schließen.</li>
+                </ul>
+                <h2 id="interaktion">Interaktion</h2>
+                <p>Innerhalb der Folien gibt es verschiedene interaktive und graphische Elemente. Sie können folgendermaßen mit diesen interagieren:</p>
+                <ul>
+                  <li>Sie können auf ein Element auf den Folien <strong>doppelklicken</strong>, um an dieses heranzuzoomen.</li>
+                  <li>Wenn zu einer Folie zusätzliche Whiteboardseiten existieren blinkt der untere Rand. Sie können den Folieninhalt in diesem Fall <strong>scrollen</strong>.</li>
+                  <li>Eingebettete Demos und Webseiten können Sie mit der <span class="sr-only">Expandieren</span> <i class="fas fa-expand-arrows-alt" alt="Expandieren"></i> Schaltfläche in den Vollbildmodus versetzen.</li>
+                </ul>
+                <h2 id="navigationsmenu">Navigationsmenu</h2>
+                <p>Im Navigationsmenu können Sie folgende Aktionen ausführen:</p>
+                <ul>
+                  <li>Zu einer beliebigen Folie springen.</li>
+                  <li>Den Suchdialog öffnen (Tastaturkürzel <strong>STRG+F</strong>).</li>
+                  <li>Die Folien in Druckansicht neu öffnen.</li>
+                  <li>Zwischen heller und dunkler Darstellung wechseln.</li>
+                  <li>Die Folienansicht in den Handout-Modus versetzen (Tastaturkürzel <strong>H-H-H</strong>).</li>
+                  <li>Den Präsentationsmodus für Vorträge umschalten (Tastaturkürzel <strong>P-P-P</strong>).</li>
+                  <li>Die Videoaufnahme starten (Tastaturkürzel <strong>R</strong>).</li>
+                  <li>Die Farbansicht kontrastreicher machen (Tastaturkürzel <strong>A-A-A</strong>).</li>
+                </ul>
+                <h2 id="feedback-menu">Feedback-Menu</h2>
+                <p>Im Fragen- und Feedback-Menu können Sie Fragen und Anmerkungen zur aktuell geöffneten Folie stellen und einsehen:</p>
+                <ul>
+                  <li>Sie können Fragen im Eingabefeld mit <strong>Umschalt + Eingabe</strong> oder der <span class="sr-only">Senden</span> <span class="fas fa-paper-plane" alt="Senden"></span>-Schaltfläche absenden.</li>
+                  <li>Sie können Fragen, die Sie beantwortet sehen wollen mit der <span class="sr-only">Daumen Hoch</span> <span class="fas fa-thumbs-up" alt="Daumen Hoch"></span>-Schaltfläche befürworten.</li>
+                  <li>Sie können Fragen, die Sie selbst gestellt haben mit der <span class="sr-only">Bearbeiten</span> <span class="fas fa-edit" alt="Bearbeiten"></span>-Schaltfläche bearbeiten.</li>
+                  <li>Sie können Fragen, die Sie selbst gestellt haben mit der <span class="sr-only">Mülltonnen</span> <span class="fas fa-trash" alt="Mülltonne"></span>-Schaltfläche löschen.</li>
+                </ul>
+                <h2 id="sonstige-tastaturkürzel">Sonstige Tastaturkürzel</h2>
+                <p>Es gibt noch viele weitere Tastaturkürzel, die in den Folien zur Verfügung stehen:</p>
+                <ul>
+                  <li>Mit <strong>F</strong> können Sie den Vollbild-Modus anschalten und mit <strong>ESC</strong> diesen wieder verlassen</li>
+                  <li>Mit <strong>?</strong> können Sie eine Übersicht aller Tastaturkürzel anzeigen lassen.</li>
+                </ul>
+                <h2 id="tastaturkürzel-im-vorlesungsvideo">Tastaturkürzel im Vorlesungsvideo</h2>
+                <p>Ist das Vortragsvideo im Vordergrund können Sie folgende Tastaturkürzel verwenden:</p>
+                <ul>
+                  <li><strong>ESC</strong>: Video schließen und zu den Folien zurückkehren.</li>
+                  <li><strong>Leertaste</strong>/<strong>K</strong>: Video pausieren.</li>
+                  <li><strong>J</strong>/<strong>L</strong>: Im Video um 10 Sekunden zurück bzw. vorwärts springen.</li>
+                  <li><strong>Cursor-links</strong>/<strong>Cursor-rechts</strong>: Im Video zur nächsten oder vorherigen Folie springen.</li>
+                  <li><strong>Cursor-hoch</strong>/<strong>Cursor-runter</strong>: Lautstärke um 5% erhöhen bzw. verringern.</li>
+                  <li><strong>M</strong>: Video stummschalten.</li>
+                </ul>
+                <p>Smartphone- und Tabletnutzer können zudem folgende Gesten verwenden:</p>
+                <ul>
+                  <li><strong>Doppelt Tippen</strong> am linken oder rechten Rand: 10 Sekunden zurück bzw. vorwärts springen.</li>
+                  <li><strong>Doppelt Tippen</strong> in den Mitte: Video pausieren.</li>
+                </ul>
+                <h2 id="zusätzliche-navigationshinweise-für-seheingeschränkte-personen">Zusätzliche Navigationshinweise für seheingeschränkte Personen</h2>
+                <p>Für Nutzer von Screen-Readern sind folgende Hinweise gegeben:</p>
+                <ul>
+                  <li>Das Navigationsmenu ist das erste interaktive Element auf den Folien.</li>
+                  <li>Die Schaltflächen für vorherige und nächste Folie sind die letzten interaktiven Elemente auf den Folien.</li>
+                  <li>Die Seitennummer zwischen den Vor- und Zurückschaltflächen ist ein Link ohne weitere Funktion.</li>
+                  <li>Im Navigationsmenu sind die Schließenschaltfläche, die Aktionsschaltflächen und die Folienliste eigene TAB-Gruppen, innerhalb derer Sie mit den <strong>Cursor</strong>-Tasten navigieren können.</li>
+                  <li>Im Fragemenu ist die Frageliste eine eigene TAB-Gruppe neben den Eingabeelementen.
+                    <ul>
+                      <li>Sie können innerhalb der Frageliste mit den <strong>Cursor</strong>-Tasten navigieren.</li>
+                      <li>Sie können mit einer selektierten Frage mit der <strong>Eingabe</strong>-Taste interagieren.</li>
+                      <li>Sie können eine selektierte Frage mit der <strong>ESC</strong>-Taste wieder abwählen.</li>
+                    </ul>
+                  </li>
+                  <li>Im Suchdialog können Sie mit <strong>Eingabe</strong> durch die Folien navigieren, in denen der eingegebe Begriff gefunden wurde.</li>
+                  <li>Matheformeln werden mit MathJax dargestellt und können mit TAB selektiert werden:
+                    <ul>
+                      <li><strong>Leertaste</strong> öffnet ein Menu zum Einstellen der assistiven Darstellung der Formeln.</li>
+                      <li><strong>Eingabe</strong> öffnet einen Untersuchungsdialog, in dem Sie mit den <strong>Cursor</strong>-Tasten die Formel näher untersuchen können.</li>
+                    </ul>
+                  </li>
+                </ul>
+                <p>Grundsätzlich ist die Betrachtung der Folien im Handout-Modus zu empfehlen:</p>
+                <ul>
+                  <li>Im Präsentationsmodus ist nur die aktuell sichtbare Folie von assistiver Technologie untersuchbar.</li>
+                  <li>Im Handout-Modus ist die gesamte Präsentation für assistive Technologie untersuchbar. Insbesondere können Sie die Überschriften der Folien als Sprungmarken verwenden.</li>
+                </ul>
               </div>
-      
-            <div class="affiliation">
-              <p>
-                TU Dortmund University
-              </p>
+              <div class="english">
+                <h2 id="navigation">Navigation</h2>
+                <p>The basic slide interface allows the following actions:</p>
+                <ul>
+                  <li>The <strong>cursor-left-</strong> and <strong>cursor-right-</strong>keys can be used to move through the slides.</li>
+                  <li>The <stong>cursor-up-</stong> and <strong>cursor-down-</strong>keys can be used to navigate to subslides, if available.</li>
+                  <li>Click on the <span class="sr-only">Burger-Menu</span><i class="fas fa-bars" alt="Burger-Menu"></i>-button (top left) to open the navigation menu</li>
+                  <li>Click on the <span class="sr-only">Questionmark</span><span style="display: inline-grid; grid-template-areas: &quot;icons&quot;; justify-items: center; align-items: center;" alt="Questionmark"><i class="fas fa-message" style="grid-area: icons;"></i><i class="fas fa-question" style="grid-area: icons; color: var(--background-color); font-size: 75%;"></i></span> button (top right) to ask questions and give feedback about the current slide.</li>
+                  <li>Click on the <span class="sr-only">Play</span><i class="fas fa-play" alt="Play"></i> button (top right) to start the video recording of the presentation on the current slide, if available.</li>
+                  <li><strong>CTRL+F</strong> or <strong>CMD+F</strong> opens a search dialog.</li>
+                  <li>You can close all open menus, dialogs or videos with the <strong>ESC</strong> key.</li>
+                </ul>
+                <h2 id="interaction">Interaction</h2>
+                <p>Within the slides you may encounter interactive elements. You can interact with them in the following ways:</p>
+                <ul>
+                  <li>You can zoom in on each element by <strong>double-</strong>, <strong>tripple-</strong> or <strong>alt-clicking</strong>, depending on the slide's settings.</li>
+                  <li>A slide with additional whiteboard-pages will have a blinking bottom border. You can <strong>scroll</strong> down on these slides to view the additional content.</li>
+                  <li>Eingebettete Demos und Webseiten können Sie mit der <span class="sr-only">Expandieren</span> <i class="fas fa-expand-arrows-alt" alt="Expandieren"></i> Schaltfläche in den Vollbildmodus versetzen.</li>
+                  <li>Embedded demos and websites can be expanded to fullscreen with the <span class="sr-only">Expand</span> <i class="fas fa-expand-arrows-alt" alt="Expand"></i> button.</li>
+                </ul>
+                <h2 id="navigation-menu">Navigation Menu</h2>
+                <p>The navigation menu contains the following features:</p>
+                <ul>
+                  <li>Jump to any slide.</li>
+                  <li>Open the search dialog (keyboard shortcut <strong>CTRL+F</strong>).</li>
+                  <li>Open slides in print view.</li>
+                  <li>Switch between light- and dark-mode.</li>
+                  <li>Toggle the Handout-View of the slides (keyboard shortcut <strong>H-H-H</strong>).</li>
+                  <li>Toggle the Presenter-Mode of the slides (keyboard shortcut <strong>P-P-P</strong>).</li>
+                  <li>Initialize the video recording (keyboard shortcut <strong>R</strong>).</li>
+                  <li>Toggle contrast colors and other accessibility features (keyboard shortcut <strong>A-A-A</strong>).</li>
+                </ul>
+                <h2 id="feedback-menu">Feedback Menu</h2>
+                <p>The questions and feeback menu can be used to comment on the current slides:</p>
+                <ul>
+                  <li>You can submit your entered questions by pressing <strong>Shift + Enter</strong> or by pressing the <span class="sr-only">Send</span> <span class="fas fa-paper-plane" alt="Send"></span> button.</li>
+                  <li>Sie können Fragen, die Sie beantwortet sehen wollen mit der <span class="sr-only">Daumen Hoch</span> <span class="fas fa-thumbs-up" alt="Daumen Hoch"></span>-Schaltfläche befürworten.</li>
+                  <li>You can up-vote questions that you want to see answered with the <span class="sr-only">Thumbs Up</span> <span class="fas fa-thumbs-up" alt="Thumbs Up"></span> button.</li>
+                  <li>You can edit your own questions with the <span class="sr-only">Edit</span> <span class="fas fa-edit" alt="Edit"></span> button.</li>
+                  <li>You can delete your own questions with the <span class="sr-only">Trashcan</span> <span class="fas fa-trash" alt="Trashcan"></span> button.</li>
+                </ul>
+                <h2 id="other-keyboard-shortcuts">Other keyboard shortcuts</h2>
+                <p>There are even more keyboard shortcuts that you can use while browsing the slides:</p>
+                <ul>
+                  <li>The <strong>F</strong> key activates fullscreen mode. You can leave it with the <strong>ESC</strong> key.</li>
+                  <li>The <strong>?</strong> key opens a cheatsheet for all available keyboard-shortcuts.</li>
+                </ul>
+                <h2 id="keyboard-shortcuts-during-playback">Keyboard shortcuts during recording playback</h2>
+                <p>When you are viewing the presentation's recording you can use the following keyboard shortcuts:</p>
+                <ul>
+                  <li><strong>ESC</strong>: Closes the video and moves to the slide currently visible in the video.</li>
+                  <li><strong>Space</strong>/<strong>K</strong>: Pauses the video.</li>
+                  <li><strong>J</strong>/<strong>L</strong>: Jump 10 seconds back or ahead.</li>
+                  <li><strong>Cursor-left</strong>/<strong>Cursor-right</strong>: Jump to the previous or next slide in the video.</li>
+                  <li><strong>Cursor-up</strong>/<strong>Cursor-down</strong>: Increase or decrease volume.</li>
+                  <li><strong>M</strong>: Mute/unmute.</li>
+                </ul>
+                <p>On Smartphone or Tablet:</p>
+                <ul>
+                  <li><strong>Double Tap</strong> the left or right edge of the screen: Jump 10 seconds back or ahead.</li>
+                  <li><strong>Double Tap</strong> the center of the screen: Pauses the video.</li>
+                </ul>
+                <h2 id="additional-information-for-visually-impaired">Additional information for visually impaired users</h2>
+                <p>The following hints may be useful for users of screenreaders:</p>
+                <ul>
+                  <li>The first element in tab-order is the navigation menu.</li>
+                  <li>The last elements in tab-order are the buttons to navigate to the previous or next slide.</li>
+                  <li>The slide-number between the previous and next buttons is a link without further function, so it can be used to quickly navigate to these buttons.</li>
+                  <li>The navigation menu has three tab-groups: The close button, the action buttons and the slide list. Within these groups you can select different elements with the <strong>cursor</strong> keys.</li>
+                  <li>Within the feedback menu, if there are questions available, you can tab into the list of questions and navigate withing the questions with the following keys:
+                    <ul>
+                      <li>Navigate between questions with the <strong>cursor</strong> keys.</li>
+                      <li>Interact with a question with the <strong>Enter</strong> key.</li>
+                      <li>Return to the question list with the <strong>ESC</strong> key.</li>
+                    </ul>
+                  </li>
+                  <li>Within the search dialog you can press <strong>Enter</strong> to jump to the slides the entered keyword was found.</li>
+                  <li>Math formulas are rendered using the MathJax library. You can interact with them with the following keys when the accessibility features are enabled:
+                    <ul>
+                      <li><strong>Space</strong> opens a menu to change the settings of your assistive view.</li>
+                      <li><strong>Enter</strong> opens a dialog that can help you navigate through complex fomulas and equations with the <strong>cursor</strong> keys.</li>
+                    </ul>
+                  </li>
+                </ul>
+                <p>If using a screen reader we recommend the usage of the handout mode:</p>
+                <ul>
+                  <li>The usual presentation view only allows assistive technology to see the current slide.</li>
+                  <li>The handout view allows assistive technology to see the entire contents of the slides at once. You can especially use the headings of slide titles for navigation.</li>
+                </ul>
               </div>
+            </details>                    <div id="index-search"></div>
+        <script type="module">
+          import setupSearch from "./support/fuzzySearch/search.js";
+          window.addEventListener("load", () => {
+            let searchBox = document.getElementById("index-search");
+            setupSearch(searchBox, 0.5, true, true);
+          });
+        </script>
       
-      
-      
-      <div class="logos">
-                <div class="logo">
-          <img src="./support/assets/tu-logo-light.svg" alt="Logo der TU Dortmund">
-        </div>
-                        </div>
-            <a class="decker-link" href="https://github.com/decker-edu/decker/">🚀 by Decker</a>
-          </div>
-  </div>
-</section>            
-<section id="mirror" class="slide level1">
-<div class="decker">
-<div class="alignment">
-<h1>Mirror</h1>
-<div class="layout">
-<div class="area">
-<div class="box block">
-<!-- Keyframe Plugin Setup -->
-<script src="/julians-krams/keyframe-plugin/keyframeFragmentCreator.js"></script>
-<script src="/julians-krams/keyframe-plugin/keyframe.js" type="module" defer></script>
-<iframe id="mirror-explanation-page" src="/julians-krams/mirror/mirror-explanation.html" allowtransparency frameborder="0" style="border: none; width: 100%; height: 85%; position: absolute; left: 0; bottom: 0;">
-</iframe>
-<script>
-  Keyframes.setKeyframes('mirror-explanation-page', [
-    { fixClipPlane: true, optimizeClipPlane: true },
-    { overheadCam: true, showCameraFrustum: true },
-    { showMirrorRay: true, fixClipPlane: false, optimizeClipPlane: false, instantClipPlane: true },
-    { mirrorRayToMirrorCam: true },
-    { showMirrorCameraFrustum: true },
-    { showMirrorRay: false, mirrorRayToMirrorCam: false },
-    { showRelativeCamPos: true, reflectionMathIndex: 0 },
-    { showMirrorNormal: true, reflectionMathIndex: 1 },
-    { projectRelativeCamPos: true, reflectionMathIndex: 2 },
-    { subtractProjectedRelativeCamPos: true, reflectionMathIndex: 3 },
-    { showReflectedVec: true, reflectionMathIndex: 4 },
-    { reflectionMathIndex: 5 },
-    { reflectionMathIndex: 6, showRelativeCamPos: false, showReflectedVec: false },
-    { reflectionMathIndex: 7, showCameraForwardVector: true },
-    { reflectionMathIndex: 8, showReflectedCameraForwardVector: true },
-    { reflectionMathIndex: 9 },
-    { reflectionMathIndex: 10, showReflectedCameraConstructedBasis: true },
-    { reflectionMathIndex: 11, showReflectedCameraConstructedBasis: false, showCameraForwardVector: false, showMirrorNormal: false, showReflectedCameraForwardVector: false },
-    { showCameraPreview: true, applyTextureToMirror: false },
-    { flipCameraPreview: true },
-    { applyTextureToMirror: true, fadeOutMirrorPreview: true },
-    { moveCameraPreviewToBottom: true, frustumMathIndex: 0 },
-    { frustumMathIndex: 1 },
-    { frustumMathIndex: 2 },
-    { frustumMathIndex: 3, showMirrorNormal: true, showMirrorCamDistanceToMirror: true },
-    { frustumMathIndex: 4 },
-    { frustumMathIndex: 5 },
-    { frustumMathIndex: 6 },
-    { frustumMathIndex: 7 },
-    { frustumMathIndex: 8 },
-    { frustumMathIndex: 9 },
-    { fixClipPlane: true },
-    { frustumMathIndex: 10 },
-    { frustumMathIndex: 11 },
-    { frustumMathIndex: 12 },
-    { frustumMathIndex: 13, showInteractiveMath: true },
-    { optimizeClipPlane: true },
-    { fixClipPlane: false },
-    { fixClipPlane: true },
-    { frustumMathIndex: 14, showInteractiveMath: false, moveCameraPreviewToBottom: false, showMirrorNormal: false, showMirrorCamDistanceToMirror: false },
-    { showCameraPreview: false, flipCameraPreview: false, overheadCam: false, showCameraFrustum: false, showMirrorCameraFrustum: false },
-    { showWhatAboutVRAtIndex: 0 },
-    { showWhatAboutVRAtIndex: 1 },
-    { showWhatAboutVRAtIndex: 2 },
-  ]);
-</script>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<code class="sourceCode markdown" style="display:none;"></code>
+      <div class="english">
+        <section data-items="1">
+          <h2>
+            Slide Decks
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Material</th>
+              </tr>
+            </thead>
+            <tbody>
+                            <tr>
+                <td>Virtual Mirrors</td>
+                <td><span class="icons"><a title="Access slide Virtual Mirrors" href="mirror-deck.html"><i class="fa-brands fa-html5"></i></a></span></td>
+              </tr>
+                          </tbody>
+          </table>
+        </section>
 
-    </div>
-  </div>
-  
-  <script src="support/vendor/videojs/video.min.js"></script>
-  <script src="support/vendor/chartjs/chart.umd.js"></script>
-  <script src="support/plugins/quizzer/wordcloud2.js"></script>
-  <script src="support/plugins/quizzer/d3-sankey.min.js"></script>
-  <script type="module" src="support/components/custom-dialog.js"></script>
-  <script type="module" src="./support/js/color-scheme.js"></script>
+        <section data-items="0">
+          <h2>Additional Material</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+              </tr>
+            </thead>
+            <tbody>
+                          </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="german">
+        <section data-items="1">
+          <h2>
+            Foliensätze
+          </h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Titel</th>
+                <th>Material</th>
+              </tr>
+            </thead>
+            <tbody>
+                            <tr>
+                <td>Virtual Mirrors</td>
+                <td><span class="icons"><a title="Foliensatz zu Virtual Mirrors öffnen" href="mirror-deck.html"><i class="fa-brands fa-html5"></i></a></span></td>
+              </tr>
+                          </tbody>
+          </table>
+        </section>
 
-<script type="module">
-  // import Reveal and all plugins
-  import Reveal from './support/vendor/reveal/dist/reveal.esm.js';
-  import deckerPlugin from './support/plugins/decker/decker.js';
-  import uiAnchorsPlugin from './support/plugins/decker/ui-anchors.js'
-  import mathPlugin from './support/plugins/math/math.js';
-  import whiteboardPlugin from './support/plugins/whiteboard/whiteboard.js';
-  import sagePlugin from './support/plugins/sage/sage.js';
-  import searchPlugin from './support/plugins/search/search.js';
-  import zoomPlugin from './support/plugins/zoom/zoom.js';
-  import printPlugin from './support/plugins/print/print.js';
-  import jinglesPlugin from './support/plugins/jingles/jingles.js';
-  import quizPlugin from './support/plugins/quiz/quiz.js';
-  import quizWuePlugin from './support/plugins/quiz-wue/quiz-wue.js';
-  import quizzerPlugin from './support/plugins/quizzer/quizzer.js'
-  import explainPlugin from './support/plugins/explain/explain.js';
-  import chartsPlugin from './support/plugins/charts/charts.js';
-  import menuPlugin from './support/plugins/menu/menu.js';
-  import feedbackPlugin from './support/plugins/feedback/feedback.js';
-  import notesPlugin from './support/vendor/reveal/plugin/notes/notes.esm.js';
-    import captionPlugin from './support/plugins/live-captioning/live-captioning.js';
-    import a11yPlugin from './support/plugins/a11y/a11y.js';
-  import handoutPlugin from './support/plugins/handout/handout.js';
+        <section data-items="0">
+          <h2>Zusatzmaterial</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Material</th>
+              </tr>
+            </thead>
+            <tbody>
+                          </tbody>
+          </table>
+        </section>
+      </div>
+    </main>
 
-  let revealConfig = { 
-    // reveal configuration (see https://revealjs.com/config/)
-    ...Decker.meta.reveal,
+    <!-- footer with author information -->
+    <footer>
+      <p>
+         
+         Julian Bohnenkämper;&ensp; 
+         TU Dortmund University;&ensp; 
+        
+      </p>
+    </footer>
+  </body>
 
-    // plugin configuration
-    math: { mathjax: String.raw`support/vendor/mathjax/`, ...Decker.meta.math },
-    chart: Decker.meta.chart,
-    menu: Decker.meta.menu,
-    explain: Decker.meta.explain,
-    feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
-    jingles: Decker.meta.jingles,
-    whiteboard: Decker.meta.whiteboard,
 
-    // list of plugins
-    plugins: [
-      deckerPlugin,
-      uiAnchorsPlugin,
-      sagePlugin,
-      mathPlugin,
-      chartsPlugin,
-      whiteboardPlugin,
-      searchPlugin,
-      zoomPlugin,
-      printPlugin,
-      jinglesPlugin,
-      quizPlugin,
-      quizWuePlugin,
-      quizzerPlugin,
-      explainPlugin,
-      menuPlugin,
-      feedbackPlugin,
-      notesPlugin,
-            captionPlugin,
-            a11yPlugin,
-      handoutPlugin
-    ]
-  };
+  <!-- javascript scripts ------------------------------------------------->
 
-  Reveal.initialize(revealConfig);
-</script>
-  
+  <script src="support/js/index.js"></script>
+  <script type="module">
+    import * as colorScheme from "./support/js/color-scheme.js";
+    const colorButton = document.getElementById("index-color-button");
+    colorButton.addEventListener("click", colorScheme.toggleColor);
+    colorButton.title = navigator.language === "de" ? "Farbmodus umschalten" : "Switch Colormode";
+    colorButton.ariaLabel = navigator.language === "de" ? "Farbmodus umschalten" : "Switch Colormode";
+  </script>
+  <script type="module" src="support/js/page-math.js"></script>
 
-</body>
+    
+  <script>
+    var socket = new WebSocket("ws://" + location.host + "/reload");
+    socket.onmessage = function (event) {
+      if (event.data.startsWith("reload!")) 
+        window.location.reload(true);
+    };
+  </script>
+
 </html>
