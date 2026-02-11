@@ -1,0 +1,671 @@
+{
+    "affiliation": [
+        "Medizinische Bild- und Signalverarbeitung",
+        "12.02.2026"
+    ],
+    "author": "Julian Bohnenkämper",
+    "build-time": [
+        "11.02.2026 17:48"
+    ],
+    "caption-server": "https://decker.cs.tu-dortmund.de/captions",
+    "chart": {
+        "colors": [
+            "#f5871f",
+            "#84B819",
+            "#2a9ddf",
+            "#c82829",
+            "#3e999f",
+            "#a3685a",
+            "#eab700",
+            "#8959a8"
+        ],
+        "defaults": {
+            "font": {
+                "family": "Lato",
+                "size": 20.0
+            },
+            "plugins": {
+                "colors": {
+                    "enabled": false
+                },
+                "colorschemes": {
+                    "scheme": "tableau.Classic10"
+                },
+                "legend": {
+                    "position": "bottom"
+                },
+                "title": {
+                    "font": {
+                        "size": 30.0,
+                        "weight": "normal"
+                    }
+                }
+            }
+        }
+    },
+    "css-dark-color-declarations": [
+        "--shade7: #ffffff;",
+        "--shade6: #e0e0e0;",
+        "--shade5: #c5c8c6;",
+        "--shade4: #b4b7b4;",
+        "--shade3: #969896;",
+        "--shade2: #373b41;",
+        "--shade1: #282a2e;",
+        "--shade0: #1d1f21;",
+        "--contrast: 40%;",
+        "--base0F: #a3685a;",
+        "--base0E: #b294bb;",
+        "--base0D: #81a2be;",
+        "--base0C: #8abeb7;",
+        "--base0B: #7da72a;",
+        "--base0A: #f0c674;",
+        "--base09: #de935f;",
+        "--base08: #cc6666;",
+        "--base07: #ffffff;",
+        "--base06: #e0e0e0;",
+        "--base05: #c5c8c6;",
+        "--base04: #b4b7b4;",
+        "--base03: #969896;",
+        "--base02: #373b41;",
+        "--base01: #282a2e;",
+        "--base00: #1d1f21;",
+        "--accent7: #a3685a;",
+        "--accent6: #b294bb;",
+        "--accent5: #81a2be;",
+        "--accent4: #8abeb7;",
+        "--accent3: #7da72a;",
+        "--accent2: #f0c674;",
+        "--accent1: #de935f;",
+        "--accent0: #cc6666;"
+    ],
+    "css-dark-colors": {
+        "accent0": "#cc6666",
+        "accent1": "#de935f",
+        "accent2": "#f0c674",
+        "accent3": "#7da72a",
+        "accent4": "#8abeb7",
+        "accent5": "#81a2be",
+        "accent6": "#b294bb",
+        "accent7": "#a3685a",
+        "base00": "#1d1f21",
+        "base01": "#282a2e",
+        "base02": "#373b41",
+        "base03": "#969896",
+        "base04": "#b4b7b4",
+        "base05": "#c5c8c6",
+        "base06": "#e0e0e0",
+        "base07": "#ffffff",
+        "base08": "#cc6666",
+        "base09": "#de935f",
+        "base0A": "#f0c674",
+        "base0B": "#7da72a",
+        "base0C": "#8abeb7",
+        "base0D": "#81a2be",
+        "base0E": "#b294bb",
+        "base0F": "#a3685a",
+        "contrast": "40%",
+        "shade0": "#1d1f21",
+        "shade1": "#282a2e",
+        "shade2": "#373b41",
+        "shade3": "#969896",
+        "shade4": "#b4b7b4",
+        "shade5": "#c5c8c6",
+        "shade6": "#e0e0e0",
+        "shade7": "#ffffff"
+    },
+    "css-declarations": [],
+    "css-light-color-declarations": [
+        "--shade7: #1d1f21;",
+        "--shade6: #282a2e;",
+        "--shade5: #4d4d4c;",
+        "--shade4: #969896;",
+        "--shade3: #8e908c;",
+        "--shade2: #d6d6d6;",
+        "--shade1: #eeeeee;",
+        "--shade0: #ffffff;",
+        "--contrast: 40%;",
+        "--base0F: #a3685a;",
+        "--base0E: #8959a8;",
+        "--base0D: #2a9ddf;",
+        "--base0C: #3e999f;",
+        "--base0B: #84b819;",
+        "--base0A: #eab700;",
+        "--base09: #f5871f;",
+        "--base08: #c82829;",
+        "--base07: #1d1f21;",
+        "--base06: #282a2e;",
+        "--base05: #4d4d4c;",
+        "--base04: #969896;",
+        "--base03: #8e908c;",
+        "--base02: #d6d6d6;",
+        "--base01: #eeeeee;",
+        "--base00: #ffffff;",
+        "--accent7: #a3685a;",
+        "--accent6: #8959a8;",
+        "--accent5: #2a9ddf;",
+        "--accent4: #3e999f;",
+        "--accent3: #84b819;",
+        "--accent2: #eab700;",
+        "--accent1: #f5871f;",
+        "--accent0: #c82829;"
+    ],
+    "css-light-colors": {
+        "accent0": "#c82829",
+        "accent1": "#f5871f",
+        "accent2": "#eab700",
+        "accent3": "#84b819",
+        "accent4": "#3e999f",
+        "accent5": "#2a9ddf",
+        "accent6": "#8959a8",
+        "accent7": "#a3685a",
+        "base00": "#ffffff",
+        "base01": "#eeeeee",
+        "base02": "#d6d6d6",
+        "base03": "#8e908c",
+        "base04": "#969896",
+        "base05": "#4d4d4c",
+        "base06": "#282a2e",
+        "base07": "#1d1f21",
+        "base08": "#c82829",
+        "base09": "#f5871f",
+        "base0A": "#eab700",
+        "base0B": "#84b819",
+        "base0C": "#3e999f",
+        "base0D": "#2a9ddf",
+        "base0E": "#8959a8",
+        "base0F": "#a3685a",
+        "contrast": "40%",
+        "shade0": "#ffffff",
+        "shade1": "#eeeeee",
+        "shade2": "#d6d6d6",
+        "shade3": "#8e908c",
+        "shade4": "#969896",
+        "shade5": "#4d4d4c",
+        "shade6": "#282a2e",
+        "shade7": "#1d1f21"
+    },
+    "decker-meta-url": "3d1aeb4ee.json",
+    "dictionary": {
+        "de": {
+            "exam": {
+                "Easy": "Leicht",
+                "Hard": "Schwer",
+                "Medium": "Mittelschwer",
+                "again-button": "Nochmal",
+                "placeholder": "Antwort eingeben",
+                "points": "Punkte",
+                "poll-button": "Poll",
+                "qrcode-button": "QRCode",
+                "reset-button": "Zurücksetzen",
+                "solution": "Lösung",
+                "solve-button": "Lösen",
+                "stop-button": "Stopp"
+            },
+            "quiz": {
+                "ic-placeholder": "Option auswählen…",
+                "input-placeholder": "Eingeben und 'Enter'",
+                "qmi-drag-hint": "Objekte per Drag&Drop ziehen…",
+                "qmi-drop-hint": "…und hier in die richtige Kategorie einsortieren.",
+                "reset-button": "Zurücksetzen",
+                "solution": "Lösung zeigen"
+            }
+        },
+        "en": {
+            "exam": {
+                "Easy": "Easy",
+                "Hard": "Hard",
+                "Medium": "Medium",
+                "again-button": "Again",
+                "placeholder": "Type in answer",
+                "points": "Points",
+                "poll-button": "Poll",
+                "qrcode-button": "QRCode",
+                "reset-button": "Reset",
+                "solution": "Solution",
+                "solve-button": "Solve",
+                "stop-button": "Stop"
+            },
+            "quiz": {
+                "ic-placeholder": "Select option…",
+                "input-placeholder": "Type and press 'Enter'",
+                "qmi-drag-hint": "Drag items from here…",
+                "qmi-drop-hint": "…and put them here into the correct category.",
+                "reset-button": "Reset",
+                "solution": "Show Solution"
+            }
+        }
+    },
+    "documentPath": ".",
+    "experiments": {
+        "fragment-templates": false
+    },
+    "explain": {
+        "camHeight": 720.0,
+        "camWidth": 1280.0,
+        "recHeight": 1080.0,
+        "recWidth": 1920.0,
+        "useGreenScreen": false
+    },
+    "external-tools": {
+        "chrome": {
+            "linux": {
+                "arguments": [
+                    "--headless",
+                    "--disable-gpu",
+                    "--virtual-time-budget=10000",
+                    "--no-pdf-header-footer",
+                    "--run-all-compositor-stages-before-draw",
+                    "--virtual-time-budget=1000000",
+                    "--incognito",
+                    "--print-to-pdf=${output}",
+                    "${input}?print-pdf#/"
+                ],
+                "command": "chrome",
+                "help": ""
+            },
+            "macos": {
+                "arguments": [
+                    "--headless",
+                    "--disable-gpu",
+                    "--virtual-time-budget=10000",
+                    "--no-pdf-header-footer",
+                    "--run-all-compositor-stages-before-draw",
+                    "--virtual-time-budget=1000000",
+                    "--incognito",
+                    "--print-to-pdf=${output}",
+                    "${input}?print-pdf#/"
+                ],
+                "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                "help": ""
+            }
+        },
+        "chromeheadless": {
+            "linux": {
+                "arguments": [
+                    "--headless",
+                    "--remote-debugging-port=${input}"
+                ],
+                "command": "chrome",
+                "help": ""
+            },
+            "macos": {
+                "arguments": [
+                    "--headless",
+                    "--log-level=3",
+                    "--disable-gpu",
+                    "--remote-debugging-port=${input}"
+                ],
+                "command": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+                "help": ""
+            },
+            "windows": {
+                "arguments": [
+                    "--headless",
+                    "--remote-debugging-port=${input}"
+                ],
+                "command": "C:\\PROGRA~2\\Microsoft\\Edge\\Application\\msedge.exe",
+                "help": "MS edge must be on the path! Please add `C:\\Program Files (x86)\\Microsoft\\Edge\\Application` to your path!"
+            }
+        },
+        "d2": {
+            "arguments": [
+                "--pad",
+                10,
+                "--sketch",
+                "--theme",
+                7,
+                "--dark-theme",
+                200,
+                "${input}",
+                "${output}"
+            ],
+            "command": "d2",
+            "help": "https://d2lang.com/"
+        },
+        "dot": {
+            "arguments": [
+                "-Tsvg",
+                "-o${output}",
+                "${input}"
+            ],
+            "command": "dot",
+            "help": "https://graphviz.org/"
+        },
+        "gnuplot": {
+            "arguments": [
+                "-d",
+                "-e",
+                "set terminal svg",
+                "-e",
+                "set output '${output}'",
+                "${input}"
+            ],
+            "command": "gnuplot",
+            "help": ""
+        },
+        "mermaid": {
+            "linux": {
+                "arguments": [
+                    "-i",
+                    "${input}",
+                    "-o",
+                    "${output}"
+                ],
+                "command": "mmdc",
+                "help": "https://github.com/mermaid-js/mermaid-cli"
+            },
+            "macos": {
+                "arguments": [
+                    "-i",
+                    "${input}",
+                    "-o",
+                    "${output}"
+                ],
+                "command": "mmdc",
+                "help": "https://github.com/mermaid-js/mermaid-cli"
+            },
+            "windows": {
+                "arguments": [
+                    "-i",
+                    "${input}",
+                    "-o",
+                    "${output}"
+                ],
+                "command": "mmdc",
+                "help": "https://github.com/mermaid-js/mermaid-cli"
+            }
+        },
+        "mp4towav": {
+            "arguments": [
+                "-y",
+                "-i",
+                "${input}",
+                "-acodec",
+                "pcm_s16le",
+                "-ac",
+                1,
+                "-ar",
+                16000,
+                "-af",
+                "speechnorm",
+                "${output}"
+            ],
+            "command": "ffmpeg",
+            "help": ""
+        },
+        "pdf2svg": {
+            "arguments": [
+                "${input}",
+                "${output}"
+            ],
+            "command": "pdf2svg",
+            "help": "https://github.com/dawbarton/pdf2svg"
+        },
+        "pdflatex": {
+            "arguments": [
+                "-halt-on-error",
+                "-interaction=batchmode",
+                "-no-shell-escape",
+                "-output-directory",
+                "${output}",
+                "${input}"
+            ],
+            "command": "pdflatex",
+            "help": "https://en.wikipedia.org/wiki/PdfTeX"
+        },
+        "plantuml": {
+            "arguments": [
+                "-tsvg",
+                "-pipe"
+            ],
+            "command": "plantuml",
+            "help": "",
+            "pipe": true
+        },
+        "rsync": {
+            "arguments": [
+                "--recursive",
+                "--copy-links",
+                "--delete",
+                "--no-group",
+                "--perms",
+                "--chmod=a+r,go-w",
+                "--no-owner",
+                "--copy-links",
+                "${input}",
+                "${output}"
+            ],
+            "command": "rsync",
+            "help": ""
+        },
+        "tomp4-concat": {
+            "arguments": [
+                "-nostdin",
+                "-v",
+                "fatal",
+                "-y",
+                "-f",
+                "concat",
+                "-safe",
+                0,
+                "-i",
+                "${input}",
+                "-vcodec",
+                "copy",
+                "-acodec",
+                "aac",
+                "${output}"
+            ],
+            "command": "ffmpeg",
+            "help": ""
+        },
+        "tomp4-copy": {
+            "arguments": [
+                "-nostdin",
+                "-v",
+                "fatal",
+                "-y",
+                "-i",
+                "${input}",
+                "-vcodec",
+                "copy",
+                "-acodec",
+                "aac",
+                "${output}"
+            ],
+            "command": "ffmpeg",
+            "help": ""
+        },
+        "tomp4-transcode": {
+            "arguments": [
+                "-nostdin",
+                "-v",
+                "fatal",
+                "-y",
+                "-i",
+                "${input}",
+                "-pix_fmt",
+                "yuv420p",
+                "-crf",
+                27,
+                "-preset",
+                "slow",
+                "-tune",
+                "stillimage",
+                "-ac",
+                1,
+                "-movflags",
+                "+faststart",
+                "-vcodec",
+                "libx264",
+                "-af",
+                "speechnorm",
+                "-r",
+                30,
+                "-metadata",
+                "comment=decker-crunched",
+                "${output}"
+            ],
+            "command": "ffmpeg",
+            "help": ""
+        },
+        "whisper": {
+            "arguments": [
+                "--file",
+                "${input}",
+                "-bs",
+                5,
+                "-mc",
+                0,
+                "--output-vtt",
+                "--output-file",
+                "${output}"
+            ],
+            "command": "whisper-cli",
+            "help": ""
+        }
+    },
+    "includeTULogo": true,
+    "index": {
+        "links": [
+            "a11y",
+            "handout",
+            "pdf"
+        ],
+        "manual": true,
+        "progress": true,
+        "search": true,
+        "searchShowsDeckSubtitle": true,
+        "searchShowsDeckTitle": true
+    },
+    "lang": "de",
+    "live-captions": true,
+    "math": {
+        "scale": 1.0
+    },
+    "palette": {
+        "colors": {
+            "dark": [
+                "#1d1f21",
+                "#282a2e",
+                "#373b41",
+                "#969896",
+                "#b4b7b4",
+                "#c5c8c6",
+                "#e0e0e0",
+                "#ffffff",
+                "#cc6666",
+                "#de935f",
+                "#f0c674",
+                "#7da72a",
+                "#8abeb7",
+                "#81a2be",
+                "#b294bb",
+                "#a3685a"
+            ],
+            "light": [
+                "#ffffff",
+                "#eeeeee",
+                "#d6d6d6",
+                "#8e908c",
+                "#969896",
+                "#4d4d4c",
+                "#282a2e",
+                "#1d1f21",
+                "#c82829",
+                "#f5871f",
+                "#eab700",
+                "#84B819",
+                "#3e999f",
+                "#2a9ddf",
+                "#8959a8",
+                "#a3685a"
+            ]
+        },
+        "contrast": 0.4
+    },
+    "progress": true,
+    "projectPath": ".",
+    "quizzer": {
+        "audio": {
+            "end": "default",
+            "loop": "default",
+            "start": "default",
+            "volume": 0.2
+        },
+        "url": "https://quiz.jetzt/"
+    },
+    "resource-pack": "exe:tudo",
+    "reveal": {
+        "backgroundTransition": "none",
+        "center": false,
+        "checkOverflow": false,
+        "controls": true,
+        "fragmentInURL": true,
+        "fragments": true,
+        "hash": true,
+        "height": 720.0,
+        "help": true,
+        "hideCursorTime": 2000.0,
+        "hideInactiveCursor": true,
+        "history": false,
+        "keyboard": true,
+        "margin": 5.0e-2,
+        "overview": false,
+        "pdfMaxPagesPerSlide": 10.0,
+        "pdfSeparateFragments": false,
+        "progress": true,
+        "scrollActivationWidth": [],
+        "slideNumber": true,
+        "touch": true,
+        "transition": "none",
+        "vertical-slides": true,
+        "viewDistance": 2.0,
+        "width": 1280.0
+    },
+    "runtime-path-variables": [
+        "logos",
+        "affiliation",
+        "author",
+        "authors",
+        "teaser",
+        "template",
+        "rpv-test.leaf-path",
+        "rpv-test.leaf-no-path",
+        "rpv-test.branch"
+    ],
+    "showDeckerLink": true,
+    "speech-recognition-language": "de-DE",
+    "static-resource-dirs": [
+        "./js"
+    ],
+    "subtitle": "For Interactive Cinematic Visualization of Volumetric Medial Data",
+    "supportPath": "support",
+    "template": {
+        "deck": {
+            "css": [
+                "custom-styles.css"
+            ]
+        }
+    },
+    "templates": {
+        "deck": "<span class=\"icons\">\n<a title=\"Open HTML slides\" href=\":(url)-deck.html\"><i class=\"fa-brands fa-html5\"></i></a>\n<a title=\"Open PDF slides\" href=\":(url)-deck.pdf\"><i class=\"fas fa-file-pdf\"></i></a>\n</span>\n"
+    },
+    "test": {
+        "default-decker": "From default.yaml",
+        "default-decker-deck": "From default.yaml",
+        "merge-list": [
+            "This line is from default.yaml"
+        ],
+        "only-default": "From default.yaml",
+        "some-value": "This line is from default.yaml"
+    },
+    "title": "ClipGS: Clippable Gaussian Splatting",
+    "whisper": {
+        "lang": "de",
+        "model": "/opt/whisper/ggml-large-v3.bin"
+    },
+    "zoom": {
+        "trigger": "tripleClick"
+    }
+}

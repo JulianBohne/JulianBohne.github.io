@@ -106,7 +106,7 @@ function readConfig() {
     "var(--base0C)",
     "var(--base0D)",
     "var(--base0E)",
-    "var(--base0F)",
+    "var(--base0F)"
   ];
 
   // reveal setting wrt slide dimension
@@ -161,8 +161,8 @@ const germanLocalization = {
     color: "Whiteboard: Farbe ",
     radius2: "Whiteboard: Stiftgröße Radius 2",
     radius4: "Whiteboard: Stiftgröße Radius 4",
-    radius6: "Whiteboard: Stiftgröße Radius 6",
-  },
+    radius6: "Whiteboard: Stiftgröße Radius 6"
+  }
 };
 
 const englishLocalization = {
@@ -187,8 +187,8 @@ const englishLocalization = {
     color: "Whiteboard: Color ",
     radius2: "Whiteboard: Pen radius 2",
     radius4: "Whiteboard: Pen radius 4",
-    radius6: "Whiteboard: Pen radius 6",
-  },
+    radius6: "Whiteboard: Pen radius 6"
+  }
 };
 
 let l10n;
@@ -231,23 +231,22 @@ let buttonPen;
 let buttonEraser;
 let buttonLaser;
 let colorPicker;
-let hoverTimer;
 
 function isPanelVisible() {
-  return buttons.classList.contains("visible");
+  return buttons.classList.contains("showMenu");
 }
 
 function hidePanel() {
   if (isPanelVisible()) {
-    buttons.classList.remove("visible");
+    buttons.classList.remove("showMenu");
     hideColorPicker();
     document.removeEventListener("pointerdown", clickHidesPanel, true);
   }
 }
 
 function showPanel() {
-  buttons.classList.add("visible");
-  clearInterval(hoverTimer);
+  buttons.classList.add("showMenu");
+  clearTimeout(autoToggleTimer);
   document.addEventListener("pointerdown", clickHidesPanel, true);
 }
 
@@ -259,11 +258,34 @@ function clickHidesPanel(evt) {
 }
 
 // function to generate a button
-function createButton(classes, callback, active = false, tooltip) {
+function createRadioButton(classes, callback, active = false, tooltip) {
   let b = document.createElement("button");
   b.className = "fa-button whiteboard " + classes;
   b.onclick = callback;
-  b.dataset.active = active;
+  b.ariaChecked = active;
+  b.role = "radio";
+  if (tooltip) b.title = tooltip;
+  if (tooltip) b.setAttribute("aria-label", tooltip);
+  buttons.appendChild(b);
+  return b;
+}
+
+function createActionButton(classes, callback, tooltip) {
+  let b = document.createElement("button");
+  b.className = "fa-button whiteboard " + classes;
+  b.onclick = callback;
+  if (tooltip) b.title = tooltip;
+  if (tooltip) b.setAttribute("aria-label", tooltip);
+  buttons.appendChild(b);
+  return b;
+}
+
+function createToggleButton(classes, callback, active = false, tooltip) {
+  let b = document.createElement("button");
+  b.className = "fa-button whiteboard " + classes;
+  b.onclick = callback;
+  b.ariaPressed = active;
+  b.role = "switch";
   if (tooltip) b.title = tooltip;
   if (tooltip) b.setAttribute("aria-label", tooltip);
   buttons.appendChild(b);
@@ -276,51 +298,38 @@ function createGUI() {
   buttons.id = "whiteboardButtons";
   buttons.classList.add("presenter-only");
 
-  // handle hover visibility of panel
-  // MARIO: this is not cool on Wacom
-  // buttons.onmouseenter = (evt) => {
-  //   clearInterval(hoverTimer);
-  // };
-  // buttons.onmouseleave = (evt) => {
-  //   hoverTimer = setInterval(hidePanel, 3000);
-  // };
-
-  buttonDownload = createButton(
+  buttonDownload = createActionButton(
     "fas fa-download",
     saveAnnotations,
-    false,
     l10n.manual_save
   );
 
-  buttonSave = createButton(
+  buttonSave = createToggleButton(
     "fas fa-save checkbox",
     toggleAutoSave,
     autosave,
     l10n.toggle_autosave
   );
-  buttonSave.setAttribute("role", "switch");
 
-  buttonGrid = createButton(
+  buttonGrid = createToggleButton(
     "fas fa-border-all checkbox",
     toggleGrid,
     false,
     l10n.toggle_grid
   );
-  buttonGrid.setAttribute("role", "switch");
 
-  buttonAdd = createButton(
+  buttonAdd = createActionButton(
     "fas fa-plus",
     addWhiteboardPage,
-    true,
     l10n.add_page
   );
 
-  buttonUndo = createButton("fas fa-undo", undo, false, l10n.undo);
+  buttonUndo = createActionButton("fas fa-undo", undo, l10n.undo);
 
-  buttonPen = createButton(
+  buttonPen = createRadioButton(
     "fas fa-pen radiobutton",
     () => {
-      if (!buttons.classList.contains("visible")) {
+      if (!buttons.classList.contains("showMenu")) {
         showPanel();
         buttonPen.focus();
         return;
@@ -334,13 +343,12 @@ function createGUI() {
     false,
     l10n.select_or_change_pen
   );
-  buttonPen.setAttribute("role", "switch");
   buttonPen.style.position = "relative";
 
-  buttonEraser = createButton(
+  buttonEraser = createRadioButton(
     "fas fa-eraser radiobutton",
     () => {
-      if (!buttons.classList.contains("visible")) {
+      if (!buttons.classList.contains("showMenu")) {
         showPanel();
         buttonEraser.focus();
         return;
@@ -350,12 +358,11 @@ function createGUI() {
     false,
     l10n.pick_eraser
   );
-  buttonEraser.setAttribute("role", "switch");
 
-  buttonLaser = createButton(
+  buttonLaser = createRadioButton(
     "fas fa-magic radiobutton",
     () => {
-      if (!buttons.classList.contains("visible")) {
+      if (!buttons.classList.contains("showMenu")) {
         showPanel();
         buttonLaser.focus();
         return;
@@ -365,9 +372,8 @@ function createGUI() {
     false,
     l10n.pick_laserpointer
   );
-  buttonLaser.setAttribute("role", "switch");
 
-  buttonWhiteboard = createButton(
+  buttonWhiteboard = createActionButton(
     "fas fa-edit checkbox",
     toggleWhiteboard,
     false,
@@ -619,30 +625,23 @@ function selectTool(newTool) {
   tool = newTool;
 
   // update tool icons, update cursor
-  buttonLaser.dataset.active =
-    buttonEraser.dataset.active =
-    buttonPen.dataset.active =
-      false;
   buttonLaser.setAttribute("aria-checked", "false");
   buttonEraser.setAttribute("aria-checked", "false");
   buttonPen.setAttribute("aria-checked", "false");
 
   switch (tool) {
     case PEN:
-      buttonPen.dataset.active = true;
       buttonPen.setAttribute("aria-checked", "true");
       buttonPen.style.color = penColor;
       selectCursor(penCursor);
       break;
 
     case ERASER:
-      buttonEraser.dataset.active = true;
       buttonEraser.setAttribute("aria-checked", "true");
       selectCursor(eraserCursor);
       break;
 
     case LASER:
-      buttonLaser.dataset.active = true;
       buttonLaser.setAttribute("aria-checked", "true");
       selectCursor(laserCursor);
       break;
@@ -745,7 +744,11 @@ function toggleWhiteboard(state) {
 let autoToggleTimer;
 function autoToggleOff(evt) {
   if (evt.pointerType == "pen") {
-    if (whiteboardActive) {
+    if (
+      whiteboardActive &&
+      evt.target.classList.contains("whiteboard") &&
+      !isPanelVisible()
+    ) {
       clearTimeout(autoToggleTimer);
       autoToggleTimer = setTimeout(disableWhiteboard, 2000);
     }
@@ -867,7 +870,7 @@ function clearSlide() {
     let grid = svg.querySelector("svg>rect");
     if (grid) {
       grid.remove();
-      buttonGrid.dataset.active = false;
+      buttonGrid.ariaPressed = false;
       needToSave(true);
     }
 
@@ -901,8 +904,7 @@ function toggleGrid() {
   let rect = getGridRect();
   if (rect) {
     rect.remove();
-    buttonGrid.dataset.active = false;
-    buttonGrid.setAttribute("aria-checked", false);
+    buttonGrid.ariaPressed = false;
   }
 
   // otherwise, add it
@@ -922,8 +924,7 @@ function toggleGrid() {
     rect.style.stroke = "none";
     rect.style.pointerEvents = "none";
 
-    buttonGrid.dataset.active = true;
-    buttonGrid.setAttribute("aria-checked", "true");
+    buttonGrid.setAttribute("aria-pressed", "true");
   }
 
   needToSave(true);
@@ -934,9 +935,7 @@ function toggleGrid() {
  */
 function toggleAutoSave() {
   autosave = !autosave;
-  buttonSave.dataset.active = autosave;
-  buttonSave.setAttribute("aria-checked", autosave);
-  console.log("autosave: " + autosave);
+  buttonSave.ariaPressed = autosave;
 }
 
 /*****************************************************************
@@ -945,13 +944,13 @@ function toggleAutoSave() {
 
 function clearUndoHistory() {
   undoHistory = [];
-  buttonUndo.dataset.active = false;
+  buttonUndo.ariaDisabled = false;
   buttonUndo.title = l10n.undo;
 }
 
 function pushUndoHistory(action) {
   undoHistory.push({ action: action, svg: svg.innerHTML });
-  buttonUndo.dataset.active = true;
+  buttonUndo.ariaDisabled = false;
   buttonUndo.title = l10n.undo + ": " + action;
   if (undoHistory.length > undoBufferSize) undoHistory.shift();
 }
@@ -963,9 +962,9 @@ function undo() {
     if (undoHistory.length) {
       let action = undoHistory[undoHistory.length - 1].action;
       buttonUndo.title = l10n.undo + ": " + action;
-      buttonUndo.dataset.active = true;
+      buttonUndo.ariaDisabled = false;
     } else {
-      buttonUndo.dataset.active = false;
+      buttonUndo.ariaDisabled = true;
       buttonUndo.title = l10n.undo;
     }
 
@@ -983,17 +982,6 @@ function undo() {
  */
 function loadAnnotationsFromURL() {
   return new Promise(function (resolve) {
-    // electron? try to load annotation from local file
-    if (window.electronApp) {
-      window.electronApp.loadAnnotation(annotationURL()).then((storage) => {
-        if (storage) {
-          parseAnnotations(storage);
-          resolve();
-          return;
-        }
-      });
-    }
-
     // determine scribble filename
     let filename = annotationURL();
 
@@ -1127,7 +1115,7 @@ function annotationData() {
     if (svg.children.length) {
       storage.annotations.push({
         slide: svg.parentElement.id,
-        svg: svg.innerHTML,
+        svg: svg.innerHTML
       });
     }
   });
@@ -1140,7 +1128,7 @@ function annotationData() {
  */
 function annotationBlob() {
   return new Blob([JSON.stringify(annotationData())], {
-    type: "application/json",
+    type: "application/json"
   });
 }
 
@@ -1148,17 +1136,11 @@ function annotationBlob() {
  * save annotations to decker server
  */
 function saveAnnotations() {
+  // cannot save annotations in electron app
+  if (window.Decker.isElectron()) return;
+
   // clear remaining laser strokes
   clearLaserStrokes();
-
-  // electron app? then save to file and return
-  if (window.electronApp) {
-    if (window.electronApp.saveAnnotation(annotationData(), annotationURL())) {
-      console.log("whiteboard annotations saved to local file");
-      needToSave(false);
-    }
-    return;
-  }
 
   // also save to downloads folder (just to be save(r))
   let a = document.createElement("a");
@@ -1290,7 +1272,7 @@ function startStroke(evt) {
   // add point, convert to Bezier spline
   points = [
     [mouseX, mouseY],
-    [mouseX, mouseY],
+    [mouseX, mouseY]
   ];
   renderStroke(points, stroke);
 
@@ -1613,7 +1595,7 @@ function slideChanged(evt) {
     fragmentChanged();
 
     // update SVG grid icon
-    buttonGrid.dataset.active = !!svg && !!getGridRect();
+    buttonGrid.ariaPressed = !!svg && !!getGridRect();
 
     // clear undo history (updates icon)
     clearUndoHistory();
@@ -1732,7 +1714,7 @@ function setupKeyBindings() {
       {
         keyCode: 49 + i,
         key: String.fromCharCode(49 + i),
-        description: l10n.keybinds.color + i,
+        description: l10n.keybinds.color + i
       },
       () => {
         selectPenColor(penColors[i === 0 ? 0 : i + 8]);
@@ -1820,7 +1802,7 @@ const Plugin = {
     return new Promise((resolve) => loadAnnotationsFromURL().then(resolve));
   },
 
-  saveAnnotations: saveAnnotations,
+  saveAnnotations: saveAnnotations
 };
 
 export default Plugin;

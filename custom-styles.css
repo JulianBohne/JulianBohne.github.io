@@ -1,0 +1,103 @@
+
+.reveal section.section h1, .reveal section div.alignment:has(>:only-child) {
+    margin: auto;
+    &>h1 {
+        font-size: 2em;
+    }
+}
+
+section#title-slide .title {
+    font-size: 2em;
+}
+
+section.slide .alignment {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &>.layout {
+        width: fit-content;
+        height: fit-content;
+        &>.area {
+            width: fit-content;
+            height: fit-content;
+            &>.box.block {
+                width: fit-content;
+                height: fit-content;
+            }
+        }
+    }
+}
+
+:root {
+    --footer-height: min(5dvh, 3.5vw);
+}
+
+:root:has(#title-slide.present) {
+    --footer-height: 0px;
+}
+
+.reveal:not(.has-vertical-slides) .slide-number.slide-number {
+    bottom: calc(0.8em + var(--footer-height));
+}
+
+.reveal.reveal {
+    height: calc(100% - var(--footer-height));
+    overflow: visible;
+}
+
+.reveal.reveal::after {
+    content: "ClipGS: Clippable Gaussian Splatting — Julian Bohnenkämper — Seminar Medizinische Bild- und Signalverarbeitung";
+    position: absolute;
+    top: 100%;
+    height: var(--footer-height);
+    font-size: calc(var(--footer-height) / 2);
+    width: 100%;
+    text-align: center;
+    align-content: center;
+    z-index: 1;
+    opacity: 0.5;
+    font-style: normal;
+}
+
+.column, .column>p {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5em;
+}
+
+.slim-video {
+    margin-top: -1.5em;
+    margin-bottom: -1.5em;
+}
+
+.rounded {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.small {
+    font-size: 0.5em;
+}
+
+.red {
+    color: var(--accent0);
+}
+
+.reveal p:has(>.minus-margin-top) {
+    margin-top: -1em;
+}
+
+.minus-margin-top-this {
+    margin-top: -1em;
+}
+
+.slight-minus-margin-top-this {
+    margin-top: -0.5em;
+}
+
+.absolute {
+    position: absolute;
+}

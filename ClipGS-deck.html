@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Julian Bohnenkämper">
+  <title> ClipGS: Clippable Gaussian Splatting:  For Interactive
+Cinematic Visualization of Volumetric Medial Data</title>
+
+  <!-- PWA stuff -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="support/pwa/icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#84b819" />
+  <link rel="manifest" href="support/pwa/manifest.webmanifest" crossorigin="use-credentials" />
+
+  <link rel="shortcut icon" href="support/assets/favicon.ico">
+
+  <script type="module">
+    /* Store JSON encoded Pandoc meta data in a global variable. */
+    import initializeDecker from "./support/js/decker.js";
+    initializeDecker("3d1aeb4ee.json");
+  </script>
+
+    <!-- Default values for CSS variables can live here. They can be overridden by
+    meta data values. -->
+    <link rel="stylesheet" href="support/css/variables.css">
+  
+    <!-- Transfer meta data values from keys `palette.colors` and `css-variables`
+    into a style sheet. Default values can come from `variables.css`. -->
+    <style class="css-declarations">
+      :root {
+                --shade7: #1d1f21;
+                --shade6: #282a2e;
+                --shade5: #4d4d4c;
+                --shade4: #969896;
+                --shade3: #8e908c;
+                --shade2: #d6d6d6;
+                --shade1: #eeeeee;
+                --shade0: #ffffff;
+                --contrast: 40%;
+                --base0F: #a3685a;
+                --base0E: #8959a8;
+                --base0D: #2a9ddf;
+                --base0C: #3e999f;
+                --base0B: #84b819;
+                --base0A: #eab700;
+                --base09: #f5871f;
+                --base08: #c82829;
+                --base07: #1d1f21;
+                --base06: #282a2e;
+                --base05: #4d4d4c;
+                --base04: #969896;
+                --base03: #8e908c;
+                --base02: #d6d6d6;
+                --base01: #eeeeee;
+                --base00: #ffffff;
+                --accent7: #a3685a;
+                --accent6: #8959a8;
+                --accent5: #2a9ddf;
+                --accent4: #3e999f;
+                --accent3: #84b819;
+                --accent2: #eab700;
+                --accent1: #f5871f;
+                --accent0: #c82829;
+            }
+      :root.dark {
+                --shade7: #ffffff;
+                --shade6: #e0e0e0;
+                --shade5: #c5c8c6;
+                --shade4: #b4b7b4;
+                --shade3: #969896;
+                --shade2: #373b41;
+                --shade1: #282a2e;
+                --shade0: #1d1f21;
+                --contrast: 40%;
+                --base0F: #a3685a;
+                --base0E: #b294bb;
+                --base0D: #81a2be;
+                --base0C: #8abeb7;
+                --base0B: #7da72a;
+                --base0A: #f0c674;
+                --base09: #de935f;
+                --base08: #cc6666;
+                --base07: #ffffff;
+                --base06: #e0e0e0;
+                --base05: #c5c8c6;
+                --base04: #b4b7b4;
+                --base03: #969896;
+                --base02: #373b41;
+                --base01: #282a2e;
+                --base00: #1d1f21;
+                --accent7: #a3685a;
+                --accent6: #b294bb;
+                --accent5: #81a2be;
+                --accent4: #8abeb7;
+                --accent3: #7da72a;
+                --accent2: #f0c674;
+                --accent1: #de935f;
+                --accent0: #cc6666;
+            }
+      :root {
+            }
+    </style>
+  
+    <link rel="stylesheet" href="support/vendor/reveal/dist/reset.css">
+    <link rel="stylesheet" href="support/vendor/reveal/dist/reveal.css">
+    <link rel="stylesheet" href="support/components/components.css">
+    <link rel="stylesheet" href="support/plugins/decker/ui-anchors.css">
+    <link rel="stylesheet" href="support/plugins/whiteboard/whiteboard.css">
+    <link rel="stylesheet" href="support/plugins/menu/menu.css">
+    <link rel="stylesheet" href="support/plugins/feedback/feedback.css">
+    <link rel="stylesheet" href="support/vendor/videojs/video-js.min.css">
+    <link rel="stylesheet" href="support/plugins/explain/explain.css">
+      <link rel="stylesheet" href="support/plugins/live-captioning/live-captioning.css">
+      <link rel="stylesheet" href="support/plugins/quiz-wue/quiz-wue.css">
+    <link rel="stylesheet" href="support/plugins/quizzer/quizzer.css">
+    <link rel="stylesheet" href="support/css/deck.css">
+    <link rel="stylesheet" href="support/css/tudo-deck.css">
+      <link rel="stylesheet" href="support/fonts/lato.css">
+      <link rel="stylesheet" href="support/plugins/handout/handout.css">
+        <link rel="stylesheet" href="custom-styles.css">
+    
+</head>
+
+<body >
+  <div class="reveal">
+    <div class="slides">
+
+      <section id="title-slide">
+  <div class="decker">
+    <div class="alignment">
+      <header class="background-on-accent">
+        <h1 class="title">
+        <span class="title-title">ClipGS: Clippable Gaussian
+        Splatting</span>
+        </h1>
+        <h2 class="subtitle">
+        <span class="title-subtitle">For Interactive Cinematic
+        Visualization of Volumetric Medial Data</span>
+        </h2>
+      </header>
+
+      
+            
+            <div class="author">
+                
+              <p>
+                Julian Bohnenkämper
+              </p>
+              </div>
+      
+            <div class="affiliation">
+              <p>
+                Medizinische Bild- und Signalverarbeitung
+              </p>
+              </div><div class="affiliation">
+              <p>
+                12.02.2026
+              </p>
+              </div>
+      
+      
+      
+      <div class="logos">
+                <div class="logo">
+          <img src="./support/assets/tu-logo-light.svg" alt="Logo der TU Dortmund">
+        </div>
+                        </div>
+            <a class="decker-link" href="https://github.com/decker-edu/decker/">🚀 by Decker</a>
+          </div>
+  </div>
+</section>            
+<section id="scenario" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Scenario</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div style="display: none;">
+<p><span class="math inline">\(\renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}\)</span> <span class="math inline">\(\renewcommand{\mat}[1]{\boldsymbol{\mathbf{#1}}}\)</span> <span class="math inline">\(\newcommand{\R}{\mathbb{R}}\)</span> <span class="math inline">\(\newcommand{\e}{\mathrm{e}}\)</span> <span class="math inline">\(\newcommand{\d}{\mathrm{d}}\)</span> <span class="math inline">\(\newcommand{\G}{\mathcal{G}}\)</span></p>
+</div>
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="column">
+<p><span>Input</span> <span class="media"><span class="figure image" style="height:auto;width:400px;"><img src="images/mri-volume-data.png" style="height:auto;width:100%;" alt="images/mri-volume-data.png" /></span></span> <span>Volumetric Medical Data</span></p>
+</div>
+<div class="column fragment">
+<p>Pathtraced Render <span class="media"><span class="figure slim-video video" style="height:auto;width:380px;"><video loop="" allow="autoplay" data-autoplay="1" style="height:auto;width:100%;" data-src="videos/thorax.webm"></video></span></span></p>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">View <span class="math inline">\(\vec v_i\)</span></li>
+<li class="fragment">Clip Plane Depth <span class="math inline">\(z_i\)</span></li>
+<li class="fragment"><span class="red">Not Interactive</span></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-preview" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Method Preview</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/method.png" style="height:500px;width:auto;" alt="images/method.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-gaussian-splatting-3dgs" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3D Gaussian Splatting (3DGS)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="column">
+<canvas id="render-output" style="width: 800px; height: 500px; border-radius: 20px;" width="1200" height="750">
+</canvas>
+<script type="module" src="js/bicycle-splat/bicycle-splat.js"></script>
+<p><a href="https://github.com/huggingface/gsplat.js" class="small">gsplat.js renderer</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gaussian-parameters" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Gaussian Parameters</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="minus-margin-top"><span class="math display">\[ \alpha \cdot \mathcal G (\vec x; \vec \mu, \vec s, \vec r) \cdot \vec c \]</span></span></p>
+<div style="display: flex; gap: 1em;">
+<style>
+    #gui-container {
+        /*position: absolute;*/
+        display: flex;
+        flex-direction: column;
+        font-size: 0.5em;
+        /*padding: 1em;*/
+        /*top: 0;*/
+        /*left: 0;*/
+    }
+    #gui-container span {
+        margin-top: 1em;
+    }
+</style>
+<div id="gui-container">
+
+</div>
+<canvas id="surface" style="width: 640px; height: 480px; border-radius: 20px;">
+</canvas>
+</div>
+<script type="module" src="js/one-splat/js/index.js"></script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="dgs-training" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>3DGS Training</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="column">
+<p><span class="rounded media"><span class="figure image" style="height:auto;width:auto;"><img src="images/chair-views.png" style="height:350px;width:auto;" alt="images/chair-views.png" /></span></span> <span class="small">Renders created with <a href="https://alexyu.net/plenoctrees/">PlenOctrees</a></span></p>
+</div>
+<div class="column">
+<div class="media">
+<figure class="rounded video" style="height:auto;width:auto;">
+<video controls="" style="height:350px;width:auto;" data-src="videos/3dgs-training.mp4">
+
+</video>
+</figure>
+</div>
+<p><a href="https://cg.cs.tu-dortmund.de/downloads/teaching/graphics/slides/25-splatting-deck.html#/d-splat-training-1" class="small">Lecture: Computer Graphics — Mario Botsch</a></p>
+</div>
+</div>
+<!-- 
+[:vspace](0.5em)
+
+$$ \mathcal L (\mat I, \mat I_{\text{gt}}) = (1 - \lambda) \mathcal L_1 (\mat I, \mat I_{\text{gt}}) + \lambda \mathcal L_{\text{D-SSIM}} (\mat I, \mat I_{\text{gt}}) $$ -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="base-method" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Base Method</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/base-method.png" style="height:500px;width:auto;" alt="images/base-method.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="hard-truncation-ht" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Hard Truncation (HT)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/base-clipping.png" style="height:500px;width:auto;" alt="images/base-clipping.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="hard-truncation-method" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Hard Truncation Method</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/hard-truncation-method.png" style="height:500px;width:auto;" alt="images/hard-truncation-method.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="adaptive-adjustment-model-aam" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Adaptive Adjustment Model (AAM)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/aam-idea.png" style="height:350px;width:auto;" alt="images/aam-idea.png" />
+</figure>
+</div>
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="media">
+<figure class="fragment image" style="height:auto;width:350px;">
+<img src="images/aam-mlp.png" style="height:auto;width:100%;" alt="images/aam-mlp.png" />
+</figure>
+</div>
+<p><span class="fragment"><span class="math display">\[ \begin{align*}\vec \mu&#39; &amp;= \vec \mu + \delta \vec \mu \\ \vec s&#39; &amp;= \vec s + \delta \vec s \\ \vec r&#39; &amp;= \vec r + \delta \vec r \end{align*}\]</span></span></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="positional-encoding-pe" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Positional Encoding (PE)</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<p><span class="minus-margin-top"><span class="math display">\[ \gamma(x) = [ \sin(2^0 \pi x), \cos(2^0 \pi x), \dots, \sin(2^L \pi x), \cos(2^L \pi x) ]^\top \]</span></span></p>
+<!--- TODO: Nice visualization of vector?-->
+<div class="fragment">
+<p>Example — <a href="https://www.matthewtancik.com/nerf">NeRF</a></p>
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="column">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="images/with-pe-cropped.png" style="height:350px;width:auto;" alt="images/with-pe-cropped.png" /></span></span> With PE</p>
+</div>
+<div class="column fragment">
+<p><span class="media"><span class="figure image" style="height:auto;width:auto;"><img src="images/no-pe-cropped.png" style="height:350px;width:auto;" alt="images/no-pe-cropped.png" /></span></span> Without PE</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ht-aam-method" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>HT + AAM Method</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/ht-aam-method.png" style="height:500px;width:auto;" alt="images/ht-aam-method.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="learned-truncation" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Learned Truncation</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/learned-truncation.png" style="height:500px;width:auto;" alt="images/learned-truncation.png" />
+</figure>
+</div>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment"><span class="math inline">\(\cancel{(\vec \mu + \vec \delta) \cdot \vec n} &lt; z\)</span></li>
+<li class="fragment"><span class="math inline">\(m &lt; z\)</span>
+<ul class="incremental">
+<li class="fragment">One degree of freedom necessary</li>
+<li class="fragment">Decouple clipping and position</li>
+</ul></li>
+<li class="fragment"><span class="red">Not differentiable</span></li>
+</ul>
+<div class="media">
+<figure class="fragment image" style="height:auto;width:270px;">
+<img src="images/step-function-reversed.png" style="height:auto;width:100%;" alt="images/step-function-reversed.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="straight-through-estimator" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Straight Through Estimator</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="grid-layout" style="grid-template-columns: 1fr 1fr;">
+<div class="column">
+<p>Forward Pass <span class="media"><span class="figure image" style="height:auto;width:350px;"><img src="images/step-function-reversed.png" style="height:auto;width:100%;" alt="images/step-function-reversed.png" /></span></span></p>
+</div>
+<div class="column">
+<p>Backward Pass <span class="media"><span class="figure image" style="height:auto;width:350px;"><img src="images/smooth-step-function-reversed.png" style="height:auto;width:100%;" alt="images/smooth-step-function-reversed.png" /></span></span></p>
+</div>
+</div>
+<!-- 
+$$
+\mathcal M = \text{sg}\left(\mathbb{1}[\sigma(z - m) > \epsilon] - \sigma(z - m)\right) + \sigma(z - m)
+$$
+
+::: { .columns-1-1 .absolute }
+
+::: { .column .fragment }
+![](images/Logistic-curve.png){ width=230px }
+$\sigma(\:\cdot\:) \text{: sigmoid}$
+:::
+
+::: column
+[$$\mathbb 1 [ \mathcal B ] = \begin{cases} 1, \text{ if } \mathcal B \text{ is true} \\ 0, \text{ if } \mathcal B \text{ is false} \end{cases}$$]{ .fragment }
+[$$\text{sg}(\:\cdot\:) \text{: stop gradient}$$]{ .fragment .slight-minus-margin-top-this }
+:::
+
+::: -->
+<!--[`vis_mask = ((torch.sigmoid(-dists) > 0.5).float() - torch.sigmoid(-dists)).detach() + torch.sigmoid(-dists)`]{ .small }-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="full-method" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Full Method</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/method.png" style="height:500px;width:auto;" alt="images/method.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="methods-for-comparison" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Methods for Comparison</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<!--$z_i$ as time parameter for dynamic models-->
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">HexPlane: A Fast Representation for Dynamic Scenes</li>
+<li class="fragment">GauFRe: Gaussian Deformation Fields for Real-time Dynamic Novel View Synthesis</li>
+<li class="fragment">N-DG: N-Dimensional Gaussians for Fitting of High Dimensional Functions</li>
+<li class="fragment">4DGaussians: 4D Gaussian Splatting for Real-Time Dynamic Scene Rendering</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparison-head" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Comparison — Head</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/head-comparison.png" style="height:500px;width:auto;" alt="images/head-comparison.png" />
+</figure>
+</div>
+<!-- 
+# Comparison --- Lower Limb
+
+![](images/lower-limb-comparison.png){ height=500px } -->
+<!-- 
+# Comparison --- Skull
+
+![](images/skull-comparison.png){ height=500px } -->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparison-thorax" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Comparison — Thorax</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/thorax-comparison.png" style="height:500px;width:auto;" alt="images/thorax-comparison.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparison-liver-kidney" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Comparison — Liver &amp; Kidney</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:auto;">
+<img src="images/liver-and-kidney-comparison.png" style="height:500px;width:auto;" alt="images/liver-and-kidney-comparison.png" />
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="comparison-quantitative" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Comparison — Quantitative</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1200px;">
+<img src="images/quantitative-table.png" style="height:auto;width:100%;" alt="images/quantitative-table.png" />
+</figure>
+</div>
+<!--
+- FPS
+    - Outlier: HexPlane
+- Training Time
+    - Outlier: N-DG
+    - Every one else ~1 coffe drinking experience
+- Storage
+    - Outliers: HexPlane, (N-DG)-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="ablation-study" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Ablation Study</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="media">
+<figure class="image" style="height:auto;width:1200px;">
+<img src="images/ablation-table.png" style="height:auto;width:100%;" alt="images/ablation-table.png" />
+</figure>
+</div>
+<!--
+<div style="display: flex; gap: 0.5em">
+``` { .bar-chart width="150px" height="500px" }
+PSNR ↑
+LT, 34.577
+AAM, 35.946
+AAM + HT, 36.255
+AAM + LT, 36.635
+```
+
+``` { .bar-chart width="150px" height="500px" }
+SSIM ↑
+LT, 0.969
+AAM, 0.971
+AAM + HT, 0.971
+AAM + LT, 0.974
+```
+
+``` { .bar-chart width="150px" height="500px" }
+LPIPS ↓
+LT, 0.070
+AAM, 0.064
+AAM + HT, 0.063
+AAM + LT, 0.061
+```
+
+``` { .bar-chart width="150px" height="500px" }
+Time [min] ↓
+LT, 11.1
+AAM, 11.5
+AAM + HT, 14.1
+AAM + LT, 13.7
+```
+
+``` { .bar-chart width="150px" height="500px" }
+FPS ↑
+LT, 201
+AAM, 148
+AAM + HT, 150
+AAM + LT, 156
+```
+
+``` { .bar-chart width="150px" height="500px" }
+Storage [MB] ↓
+LT, 14.7
+AAM, 15.6
+AAM + HT, 15.7
+AAM + LT, 16.1
+```
+</div>-->
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="summary-outlook" class="slide level1">
+<div class="decker">
+<div class="alignment">
+<h1>Summary &amp; Outlook</h1>
+<div class="layout">
+<div class="area">
+<div class="box block">
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Interactive cinematic rendering of medical data</li>
+<li class="fragment">Extention of 3DGS
+<ul class="incremental">
+<li class="fragment">Learned Truncation</li>
+<li class="fragment">Adaptive Adjustment Model</li>
+</ul></li>
+<li class="fragment">Medical cinematic dataset</li>
+<li class="fragment">Incremental improvement</li>
+</ul>
+</div>
+<p><span style="display:block; clear:both; height:0.5em;"></span></p>
+<div class="fragment">
+<p>What’s next?</p>
+<div class="incremental">
+<ul class="incremental">
+<li class="fragment">Clip plane direction?</li>
+<li class="fragment">Even more natural clipping possible?</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<code class="sourceCode markdown" style="display:none;"></code>
+
+    </div>
+  </div>
+  
+  <script src="support/vendor/videojs/video.min.js"></script>
+  <script src="support/vendor/chartjs/chart.umd.js"></script>
+  <script src="support/plugins/quizzer/wordcloud2.js"></script>
+  <script src="support/plugins/quizzer/d3-sankey.min.js"></script>
+  <script type="module" src="support/components/custom-dialog.js"></script>
+  <script type="module" src="./support/js/color-scheme.js"></script>
+
+<script type="module">
+  // import Reveal and all plugins
+  import Reveal from './support/vendor/reveal/dist/reveal.esm.js';
+  import deckerPlugin from './support/plugins/decker/decker.js';
+  import uiAnchorsPlugin from './support/plugins/decker/ui-anchors.js'
+  import mathPlugin from './support/plugins/math/math.js';
+  import whiteboardPlugin from './support/plugins/whiteboard/whiteboard.js';
+  import sagePlugin from './support/plugins/sage/sage.js';
+  import searchPlugin from './support/plugins/search/search.js';
+  import zoomPlugin from './support/plugins/zoom/zoom.js';
+  import printPlugin from './support/plugins/print/print.js';
+  import jinglesPlugin from './support/plugins/jingles/jingles.js';
+  import quizPlugin from './support/plugins/quiz/quiz.js';
+  import quizWuePlugin from './support/plugins/quiz-wue/quiz-wue.js';
+  import quizzerPlugin from './support/plugins/quizzer/quizzer.js'
+  import explainPlugin from './support/plugins/explain/explain.js';
+  import chartsPlugin from './support/plugins/charts/charts.js';
+  import menuPlugin from './support/plugins/menu/menu.js';
+  import feedbackPlugin from './support/plugins/feedback/feedback.js';
+  import notesPlugin from './support/vendor/reveal/plugin/notes/notes.esm.js';
+    import captionPlugin from './support/plugins/live-captioning/live-captioning.js';
+      import a11yPlugin from './support/plugins/a11y/a11y.js';
+  import handoutPlugin from './support/plugins/handout/handout.js';
+  import chattyPlugin from './support/plugins/chatty/chatty.js';
+
+  let revealConfig = { 
+    // reveal configuration (see https://revealjs.com/config/)
+    ...Decker.meta.reveal,
+
+    // plugin configuration
+    math: { mathjax: String.raw`support/vendor/mathjax/`, ...Decker.meta.math },
+    chart: Decker.meta.chart,
+    menu: Decker.meta.menu,
+    explain: Decker.meta.explain,
+    feedback: Decker.meta.feedback || Decker.meta["decker-engine"],
+    jingles: Decker.meta.jingles,
+    whiteboard: Decker.meta.whiteboard,
+    
+    // list of plugins
+    plugins: [
+      deckerPlugin,
+      uiAnchorsPlugin,
+      sagePlugin,
+      mathPlugin,
+      chartsPlugin,
+      whiteboardPlugin,
+      searchPlugin,
+      zoomPlugin,
+      printPlugin,
+      jinglesPlugin,
+      quizPlugin,
+      quizWuePlugin,
+      quizzerPlugin,
+      explainPlugin,
+      menuPlugin,
+      chattyPlugin,
+      feedbackPlugin,
+      notesPlugin,
+            captionPlugin,
+              a11yPlugin,
+      handoutPlugin
+    ]
+  };
+
+  Reveal.initialize(revealConfig);
+</script>
+  
+
+</body>
+</html>

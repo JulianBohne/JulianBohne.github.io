@@ -92,10 +92,8 @@ html.handout .reveal .pause-overlay {
   display: none;
 }
 
-html.handout .reveal .stack > p {
-  display: block;
-}
-
+html.handout .reveal .stack,
+html.handout .reveal .stack > p,
 html.handout .reveal .stack span.media {
   display: block;
 }
@@ -104,17 +102,17 @@ html.handout .reveal .slides section .stack {
   counter-reset: stack-item;
 }
 
-html.handout .reveal .slides section .stack .fragment {
+html.handout .reveal .slides section .stack .media {
   position: relative;
   border: 1px solid var(--foreground-color);
   margin: 0.5rem;
 }
 
-html.handout .reveal .slides section .stack .fragment img {
+html.handout .reveal .slides section .stack .media img {
   border: none;
 }
 
-html.handout .reveal .slides section .stack .fragment::before {
+html.handout .reveal .slides section .stack .media::before {
   counter-increment: stack-item;
   content: counter(stack-item);
   color: var(--foreground-color);
@@ -141,59 +139,6 @@ html .decker-anchor #handout-minus {
 html.handout .decker-anchor #handout-plus,
 html.handout .decker-anchor #handout-minus {
   display: inline-block;
-}
-
-/* animated button */
-
-#menu-handout-button {
-  position: relative;
-  --dwidth: var(--icon-size);
-  --dheight: calc(var(--dwidth) * 9 / 16);
-  --dcenterx: calc((100% / 2) - (0.5 * var(--dwidth)));
-  --dcentery: calc((100% / 2) - (0.5 * var(--dheight)));
-  --dhspace: calc(100% - 2 * var(--dheight));
-}
-
-#menu-handout-button div {
-  box-sizing: content-box;
-  background-color: var(--menu-header-text-color);
-  box-shadow: 0.125rem 0.125rem var(--menu-header-background-color);
-  border-radius: 0.15rem;
-  width: var(--dwidth);
-  height: var(--dheight);
-  transition: top 0.3s ease-in-out, left 0.3s ease-in-out;
-}
-
-#menu-handout-button:hover div {
-  background-color: var(--accent3);
-}
-
-#menu-handout-button .top-anim-rect {
-  position: absolute;
-  top: calc(var(--dhspace) / 3);
-  left: var(--dcenterx);
-  z-index: 512;
-}
-
-#menu-handout-button .bottom-anim-rect {
-  position: absolute;
-  top: calc(var(--dhspace) / 3 * 2 + var(--dheight));
-  left: var(--dcenterx);
-  z-index: 511;
-}
-
-.handout #menu-handout-button .top-anim-rect {
-  position: absolute;
-  top: calc(var(--dcentery) - 0.3 * var(--dheight));
-  left: calc(var(--dcenterx) - 0.2 * var(--dwidth));
-  z-index: 512;
-}
-
-.handout #menu-handout-button .bottom-anim-rect {
-  position: absolute;
-  top: calc(var(--dcentery) + 0.3 * var(--dheight));
-  left: calc(var(--dcenterx) + 0.2 * var(--dwidth));
-  z-index: 511;
 }
 
 .handout .decker {
